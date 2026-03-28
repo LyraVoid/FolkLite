@@ -25,7 +25,7 @@ import top.yukonga.miuix.kmp.basic.Card
 import top.yukonga.miuix.kmp.basic.Icon
 import top.yukonga.miuix.kmp.basic.IconButton
 import top.yukonga.miuix.kmp.basic.Scaffold
-import top.yukonga.miuix.kmp.basic.SmallTopAppBar
+import top.yukonga.miuix.kmp.basic.TopAppBar
 import top.yukonga.miuix.kmp.extra.SuperSwitch
 
 @Destination<RootGraph>
@@ -94,7 +94,7 @@ fun NavigationLayoutScreen(navigator: DestinationsNavigator) {
 
 @Composable
 private fun TopBar(onBack: () -> Unit = {}) {
-    SmallTopAppBar(
+    TopAppBar(
         title = stringResource(R.string.settings_nav_layout_title),
         navigationIcon = {
             IconButton(

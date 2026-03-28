@@ -22,7 +22,7 @@ data class ParsedModuleInfo(
 
 object ModuleParser {
 
-    class ModuleParseException(@StringRes val messageRes: Int, vararg val formatArgs: Any) :
+    class ModuleParseException(@param:StringRes val messageRes: Int, vararg val formatArgs: Any) :
         Exception() {
         fun getMessage(context: Context): String {
             return context.getString(messageRes, *formatArgs)

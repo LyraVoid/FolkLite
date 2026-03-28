@@ -21,7 +21,6 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.key.Key
 import androidx.compose.ui.input.key.key
 import androidx.compose.ui.platform.LocalContext
@@ -40,11 +39,11 @@ import me.bmax.apatch.R
 import me.bmax.apatch.ui.component.KeyEventBlocker
 import me.bmax.apatch.util.installModule
 import me.bmax.apatch.util.reboot
-import top.yukonga.miuix.kmp.basic.FloatingActionButton
+
 import top.yukonga.miuix.kmp.basic.Icon
 import top.yukonga.miuix.kmp.basic.IconButton
 import top.yukonga.miuix.kmp.basic.Scaffold
-import top.yukonga.miuix.kmp.basic.SmallTopAppBar
+import top.yukonga.miuix.kmp.basic.TopAppBar
 import top.yukonga.miuix.kmp.basic.Text
 import top.yukonga.miuix.kmp.theme.MiuixTheme
 import java.io.File
@@ -122,7 +121,7 @@ fun InstallScreen(
         floatingActionButton = {
             if (showFloatAction) {
                 val reboot = stringResource(id = R.string.reboot)
-                FloatingActionButton(
+                IconButton(
                     modifier = Modifier.padding(bottom = 30.dp),
                     onClick = {
                         scope.launch {
@@ -130,9 +129,9 @@ fun InstallScreen(
                                 reboot()
                             }
                         }
-                    },
+                    }
                 ) {
-                    Icon(Icons.Filled.Refresh, reboot, tint = Color.White)
+                    Icon(Icons.Filled.Refresh, reboot, tint = MiuixTheme.colorScheme.primary)
                 }
             }
 
@@ -164,7 +163,7 @@ fun InstallScreen(
 
 @Composable
 private fun TopBar(onBack: () -> Unit = {}, onSave: () -> Unit = {}) {
-    SmallTopAppBar (
+    TopAppBar (
         title = stringResource(R.string.apm_install),
         navigationIcon = {
             IconButton(

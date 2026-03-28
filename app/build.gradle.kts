@@ -419,6 +419,7 @@ dependencies {
     ksp(libs.compose.destinations.ksp)
 
     implementation(libs.miuix)
+    implementation(libs.miuix.icons)
 
     implementation(libs.com.github.topjohnwu.libsu.core)
     implementation(libs.com.github.topjohnwu.libsu.service)

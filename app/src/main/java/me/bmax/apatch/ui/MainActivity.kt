@@ -116,6 +116,7 @@ import me.bmax.apatch.ui.theme.LocalEnableFloatingBottomBar
 import me.bmax.apatch.ui.theme.LocalEnableLiquidGlass
 import me.bmax.apatch.ui.theme.LocalBottomBarVisible
 import me.bmax.apatch.ui.theme.LocalMainPagerState
+import me.bmax.apatch.ui.theme.migrateColorModeIfNeeded
 import me.bmax.apatch.ui.MainPagerState
 import me.bmax.apatch.ui.viewmodel.APModuleViewModel
 import me.bmax.apatch.util.ModuleParser
@@ -126,7 +127,7 @@ import me.zhanghai.android.appiconloader.coil.AppIconFetcher
 import me.zhanghai.android.appiconloader.coil.AppIconKeyer
 import top.yukonga.miuix.kmp.basic.Icon
 import top.yukonga.miuix.kmp.basic.NavigationBar
-import top.yukonga.miuix.kmp.basic.NavigationItem
+import top.yukonga.miuix.kmp.basic.NavigationBarItem
 import top.yukonga.miuix.kmp.basic.Scaffold
 import top.yukonga.miuix.kmp.basic.Text
 import top.yukonga.miuix.kmp.theme.MiuixTheme
@@ -189,6 +190,9 @@ class MainActivity : AppCompatActivity() {
         // Initialize DPI settings
         me.bmax.apatch.util.DPIUtils.load(this)
         me.bmax.apatch.util.DPIUtils.applyDpi(this)
+
+        // Migrate color mode from 0.7.x to 0.8.x ordering
+        migrateColorModeIfNeeded(this)
 
         // Disables automatic window adjustment when the soft keyboard appears
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING)
@@ -632,20 +636,21 @@ private fun BottomBar(
                 }
             }
         } else {
-            val navItems = visibleDestinations.map { d ->
-                d to NavigationItem(
-                    label = stringResource(d.label),
-                    icon = if (d == BottomBarDestination.entries.getOrNull(mainPagerState.selectedPage)) d.iconSelected else d.iconNotSelected
-                )
-            }
             NavigationBar(
                 modifier = if (enableBlur) {
                     Modifier.defaultHazeEffect(hazeState, hazeStyle)
                 } else Modifier,
                 color = if (enableBlur) Color.Transparent else MiuixTheme.colorScheme.surface,
-                items = navItems.map { it.second },
-                selected = selectedIndex,
-                onClick = navigateToPage
+                content = {
+                    visibleDestinations.forEachIndexed { index, destination ->
+                        NavigationBarItem(
+                            icon = if (index == selectedIndex) destination.iconSelected else destination.iconNotSelected,
+                            label = stringResource(destination.label),
+                            selected = index == selectedIndex,
+                            onClick = { navigateToPage(index) }
+                        )
+                    }
+                }
             )
         }
     }

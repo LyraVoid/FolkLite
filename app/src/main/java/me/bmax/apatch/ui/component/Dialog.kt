@@ -456,7 +456,7 @@ private fun ConfirmDialog(
 ) {
     SuperDialog(
         modifier = Modifier.windowInsetsPadding(WindowInsets.systemBars.only(WindowInsetsSides.Top)),
-        show = showDialog,
+        show = showDialog.value,
         title = visuals.title,
         onDismissRequest = {
             dismiss()

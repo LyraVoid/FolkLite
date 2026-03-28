@@ -26,13 +26,14 @@ import kotlinx.coroutines.launch
 import me.bmax.apatch.BuildConfig
 import me.bmax.apatch.R
 import me.bmax.apatch.ui.theme.APatchTheme
-import top.yukonga.miuix.kmp.basic.FloatingActionButton
+import top.yukonga.miuix.kmp.basic.IconButton
+import top.yukonga.miuix.kmp.theme.MiuixTheme
 import top.yukonga.miuix.kmp.basic.Icon
 import top.yukonga.miuix.kmp.basic.Scaffold
-import top.yukonga.miuix.kmp.basic.SmallTopAppBar
+import top.yukonga.miuix.kmp.basic.TopAppBar
 import top.yukonga.miuix.kmp.basic.Text
-import top.yukonga.miuix.kmp.icon.MiuixIcons
-import top.yukonga.miuix.kmp.icon.icons.useful.Save
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Save
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -91,12 +92,12 @@ private fun CrashHandleScreen(
     Scaffold(
         contentWindowInsets = WindowInsets.safeDrawing,
         topBar = {
-            SmallTopAppBar(
+            TopAppBar(
                 title = stringResource(R.string.crash_handle_title)
             )
         },
         floatingActionButton = {
-            FloatingActionButton(
+            IconButton(
                 modifier = Modifier.padding(bottom = 30.dp),
                 onClick = {
                     scope.launch {
@@ -106,7 +107,7 @@ private fun CrashHandleScreen(
                     }
                 }
             ) {
-                Icon(imageVector = MiuixIcons.Useful.Save, contentDescription = "save")
+                Icon(imageVector = Icons.Default.Save, contentDescription = "save", tint = MiuixTheme.colorScheme.primary)
             }
         }
     ) { paddingValues ->

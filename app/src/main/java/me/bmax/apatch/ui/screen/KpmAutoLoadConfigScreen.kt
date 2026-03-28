@@ -45,15 +45,15 @@ import top.yukonga.miuix.kmp.basic.Scaffold
 import top.yukonga.miuix.kmp.basic.Text
 import top.yukonga.miuix.kmp.basic.TextButton
 import top.yukonga.miuix.kmp.basic.TextField
-import top.yukonga.miuix.kmp.basic.SmallTopAppBar
+import top.yukonga.miuix.kmp.basic.TopAppBar
 import top.yukonga.miuix.kmp.extra.SuperDialog
 import top.yukonga.miuix.kmp.extra.SuperSwitch
 import top.yukonga.miuix.kmp.theme.MiuixTheme
 import top.yukonga.miuix.kmp.utils.overScrollVertical
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 
 @Destination<RootGraph>
 @Composable
@@ -102,12 +102,12 @@ fun KpmAutoLoadConfigScreen(navigator: DestinationsNavigator) {
 
     Scaffold(
         topBar = {
-            SmallTopAppBar(
+            TopAppBar(
                 title = stringResource(R.string.kpm_autoload_title),
                 navigationIcon = {
                     IconButton(onClick = { navigator.navigateUp() }) {
                         Icon(
-                            imageVector = Icons.Default.ArrowBack,
+                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                             contentDescription = stringResource(android.R.string.cancel)
                         )
                     }
@@ -117,7 +117,7 @@ fun KpmAutoLoadConfigScreen(navigator: DestinationsNavigator) {
         popupHost = {
             SuperDialog(
                 title = stringResource(R.string.kpm_autoload_save_confirm),
-                show = showSaveDialog,
+                show = showSaveDialog.value,
                 onDismissRequest = { showSaveDialog.value = false }
             ) {
                 Spacer(Modifier.height(12.dp))

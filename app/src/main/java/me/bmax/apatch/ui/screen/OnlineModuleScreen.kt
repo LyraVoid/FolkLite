@@ -30,7 +30,8 @@ import top.yukonga.miuix.kmp.basic.Icon
 import top.yukonga.miuix.kmp.basic.IconButton
 import top.yukonga.miuix.kmp.basic.InputField
 import top.yukonga.miuix.kmp.basic.Scaffold
-import top.yukonga.miuix.kmp.basic.SearchBar
+import androidx.compose.foundation.background
+import androidx.compose.foundation.shape.RoundedCornerShape
 import top.yukonga.miuix.kmp.basic.Text
 import top.yukonga.miuix.kmp.basic.TopAppBar
 import top.yukonga.miuix.kmp.theme.MiuixTheme
@@ -91,25 +92,18 @@ fun OnlineModuleScreen(
         }
     ) { innerPadding ->
         Column(modifier = Modifier.padding(innerPadding)) {
-            SearchBar(
+            InputField(
+                query = viewModel.searchQuery,
+                onQueryChange = { viewModel.onSearchQueryChange(it) },
+                onSearch = { expanded = false },
+                expanded = expanded,
+                onExpandedChange = {
+                    expanded = it
+                    if (!it) viewModel.onSearchQueryChange("")
+                },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(top = 16.dp, start = 16.dp, end = 16.dp),
-                inputField = {
-                    InputField(
-                        query = viewModel.searchQuery,
-                        onQueryChange = { viewModel.onSearchQueryChange(it) },
-                        onSearch = { expanded = false },
-                        expanded = expanded,
-                        onExpandedChange = {
-                            expanded = it
-                            if (!it) viewModel.onSearchQueryChange("")
-                        }
-                    )
-                },
-                expanded = expanded,
-                onExpandedChange = { expanded = it },
-                content = {}
+                    .padding(top = 16.dp, start = 16.dp, end = 16.dp)
             )
 
             Box(

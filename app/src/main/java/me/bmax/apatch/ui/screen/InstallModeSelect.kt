@@ -29,10 +29,10 @@ import top.yukonga.miuix.kmp.basic.Card
 import top.yukonga.miuix.kmp.basic.Icon
 import top.yukonga.miuix.kmp.basic.IconButton
 import top.yukonga.miuix.kmp.basic.Scaffold
-import top.yukonga.miuix.kmp.basic.SmallTopAppBar
+import top.yukonga.miuix.kmp.basic.TopAppBar
 import top.yukonga.miuix.kmp.extra.SuperArrow
-import top.yukonga.miuix.kmp.icon.MiuixIcons
-import top.yukonga.miuix.kmp.icon.icons.useful.Back
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 
 var selectedBootImage: Uri? = null
 
@@ -161,12 +161,12 @@ private fun SelectInstallMethod(
 
 @Composable
 private fun TopBar(onBack: () -> Unit = {}) {
-    SmallTopAppBar(
+    TopAppBar(
         title = stringResource(R.string.mode_select_page_title),
         navigationIcon = {
             IconButton(
                 onClick = onBack,
-            ) { Icon(MiuixIcons.Useful.Back, contentDescription = null) }
+            ) { Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = null) }
         },
     )
 }

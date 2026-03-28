@@ -9,6 +9,7 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -17,11 +18,13 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
@@ -33,6 +36,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.offset
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -62,7 +66,6 @@ import me.bmax.apatch.Natives
 import me.bmax.apatch.R
 import me.bmax.apatch.apApp
 import me.bmax.apatch.ui.component.ConfirmResult
-import me.bmax.apatch.ui.component.DropdownItem
 import me.bmax.apatch.ui.component.IconTextButton
 import me.bmax.apatch.ui.component.LoadingDialogHandle
 import me.bmax.apatch.ui.component.rememberConfirmDialog
@@ -76,18 +79,19 @@ import me.bmax.apatch.util.inputStream
 import me.bmax.apatch.util.writeTo
 import top.yukonga.miuix.kmp.basic.ButtonDefaults
 import top.yukonga.miuix.kmp.basic.Card
-import top.yukonga.miuix.kmp.basic.FloatingActionButton
 import top.yukonga.miuix.kmp.basic.HorizontalDivider
 import top.yukonga.miuix.kmp.basic.Icon
 import top.yukonga.miuix.kmp.basic.IconButton
-import top.yukonga.miuix.kmp.basic.ListPopup
+import top.yukonga.miuix.kmp.basic.DropdownImpl
 import top.yukonga.miuix.kmp.basic.ListPopupColumn
+import top.yukonga.miuix.kmp.basic.ListPopupDefaults
 import top.yukonga.miuix.kmp.basic.PopupPositionProvider
 import top.yukonga.miuix.kmp.basic.PullToRefresh
 import top.yukonga.miuix.kmp.basic.Scaffold
 import top.yukonga.miuix.kmp.basic.Text
 import top.yukonga.miuix.kmp.basic.TextButton
 import top.yukonga.miuix.kmp.extra.SuperDialog
+import top.yukonga.miuix.kmp.extra.SuperListPopup
 import top.yukonga.miuix.kmp.theme.MiuixTheme
 import top.yukonga.miuix.kmp.basic.TextField
 import top.yukonga.miuix.kmp.basic.TopAppBar
@@ -190,28 +194,33 @@ fun KPModuleScreen(navigator: DestinationsNavigator) {
             )
             val fabContent: @Composable () -> Unit = {
                 Column {
-                    FloatingActionButton(
+                    IconButton(
                         onClick = { expanded.value = !expanded.value },
-                        containerColor = MiuixTheme.colorScheme.primary,
-                        modifier = Modifier.padding(bottom = 30.dp)
+                        modifier = Modifier
+                            .padding(bottom = 30.dp)
+                            .size(52.dp)
+                            .border(1.dp, MiuixTheme.colorScheme.primary, CircleShape)
+                            .background(MiuixTheme.colorScheme.surface, CircleShape)
                     ) {
                         Icon(
                             painter = painterResource(id = R.drawable.package_import),
                             contentDescription = null,
-                            tint = MiuixTheme.colorScheme.onPrimary
+                            tint = MiuixTheme.colorScheme.primary
                         )
                     }
 
-                    ListPopup(
-                        show = expanded,
-                        alignment = PopupPositionProvider.Align.Right,
+                    SuperListPopup(
+                        show = expanded.value,
+                        popupPositionProvider = ListPopupDefaults.ContextMenuPositionProvider,
+                        alignment = PopupPositionProvider.Align.TopEnd,
                         onDismissRequest = { expanded.value = false }
                     ) {
 
                         ListPopupColumn {
                             options.forEachIndexed { index, label ->
-                                DropdownItem(
+                                DropdownImpl(
                                     text = label,
+                                    isSelected = false,
                                     optionSize = options.size,
                                     index = index,
                                     onSelectedIndexChange = {
@@ -332,7 +341,7 @@ fun KPMControlDialog(ControlDialog: MutableState<Boolean>) {
     SuperDialog(
         title = stringResource(R.string.kpm_control_dialog_title),
         summary = stringResource(R.string.kpm_control_dialog_content),
-        show = ControlDialog,
+        show = ControlDialog.value,
         onDismissRequest = { ControlDialog.value = false }
     ) {
         TextField(

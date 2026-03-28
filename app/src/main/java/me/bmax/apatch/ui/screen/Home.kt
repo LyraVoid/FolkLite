@@ -2,6 +2,7 @@ package me.bmax.apatch.ui.screen
 
 import android.os.Build
 import android.system.Os
+import android.content.SharedPreferences
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.expandVertically
 import androidx.compose.animation.fadeIn
@@ -48,6 +49,7 @@ import androidx.compose.material.icons.outlined.SystemUpdate
 import androidx.compose.material.icons.rounded.CheckCircleOutline
 import androidx.compose.material.icons.rounded.ErrorOutline
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
@@ -84,7 +86,6 @@ import me.bmax.apatch.APApplication
 import me.bmax.apatch.Natives
 import me.bmax.apatch.R
 import me.bmax.apatch.apApp
-import me.bmax.apatch.ui.component.DropdownItem
 import me.bmax.apatch.ui.component.rememberConfirmDialog
 import me.bmax.apatch.ui.viewmodel.PatchesViewModel
 import me.bmax.apatch.util.LatestVersionInfo
@@ -96,19 +97,21 @@ import me.bmax.apatch.util.reboot
 import top.yukonga.miuix.kmp.basic.Button
 import top.yukonga.miuix.kmp.basic.Card
 import top.yukonga.miuix.kmp.basic.CardDefaults
+import top.yukonga.miuix.kmp.basic.DropdownImpl
 import top.yukonga.miuix.kmp.basic.Icon
 import top.yukonga.miuix.kmp.basic.IconButton
-import top.yukonga.miuix.kmp.basic.ListPopup
 import top.yukonga.miuix.kmp.basic.ListPopupColumn
+import top.yukonga.miuix.kmp.basic.ListPopupDefaults
 import top.yukonga.miuix.kmp.basic.MiuixScrollBehavior
+import top.yukonga.miuix.kmp.basic.ScrollBehavior
 import top.yukonga.miuix.kmp.basic.PopupPositionProvider
 import top.yukonga.miuix.kmp.basic.Scaffold
-import top.yukonga.miuix.kmp.basic.ScrollBehavior
 import top.yukonga.miuix.kmp.basic.Text
 import top.yukonga.miuix.kmp.basic.TextButton
 import top.yukonga.miuix.kmp.basic.TextField
 import top.yukonga.miuix.kmp.basic.TopAppBar
 import top.yukonga.miuix.kmp.extra.SuperDialog
+import top.yukonga.miuix.kmp.extra.SuperListPopup
 import top.yukonga.miuix.kmp.theme.MiuixTheme
 import top.yukonga.miuix.kmp.theme.MiuixTheme.colorScheme
 import top.yukonga.miuix.kmp.basic.ButtonDefaults
@@ -119,7 +122,19 @@ private val managerVersion = getManagerVersion()
 
 @Composable
 fun HomeScreen(navigator: DestinationsNavigator) {
-    val homeLayout = APApplication.sharedPreferences.getString("home_layout_style", "default")
+    val prefs = APApplication.sharedPreferences
+    var homeLayout by remember { mutableStateOf(prefs.getString("home_layout_style", "default") ?: "default") }
+
+    DisposableEffect(prefs) {
+        val listener = SharedPreferences.OnSharedPreferenceChangeListener { _, key ->
+            if (key == "home_layout_style") {
+                homeLayout = prefs.getString("home_layout_style", "default") ?: "default"
+            }
+        }
+        prefs.registerOnSharedPreferenceChangeListener(listener)
+        onDispose { prefs.unregisterOnSharedPreferenceChangeListener(listener) }
+    }
+
     if (homeLayout == "list") {
         ListHomeScreen(navigator)
     } else {
@@ -205,7 +220,7 @@ fun AuthFailedTipDialog(showDialog: MutableState<Boolean>) {
     SuperDialog(
         title = stringResource(R.string.home_dialog_auth_fail_title),
         summary = stringResource(R.string.home_dialog_auth_fail_content),
-        show = showDialog,
+        show = showDialog.value,
         onDismissRequest = { showDialog.value = false },
     ) {
         Spacer(Modifier.height(12.dp))
@@ -232,7 +247,7 @@ fun AuthSuperKey(showDialog: MutableState<Boolean>, showFailedDialog: MutableSta
     var enable by remember { mutableStateOf(false) }
 
     SuperDialog(
-        show = showDialog,
+        show = showDialog.value,
         title = stringResource(R.string.home_auth_key_title),
         summary = stringResource(R.string.home_auth_key_desc),
         onDismissRequest = { showDialog.value = false }
@@ -342,15 +357,17 @@ private fun TopBar(
                         contentDescription = stringResource(id = R.string.reboot)
                     )
 
-                    ListPopup(
-                        show = howDropdownReboot,
-                        alignment = PopupPositionProvider.Align.Right,
+                    SuperListPopup(
+                        show = howDropdownReboot.value,
+                        popupPositionProvider = ListPopupDefaults.ContextMenuPositionProvider,
+                        alignment = PopupPositionProvider.Align.TopEnd,
                         onDismissRequest = { howDropdownReboot.value = false }
                     ) {
                         ListPopupColumn {
                             rebootItems.forEachIndexed { index, string ->
-                                DropdownItem(
+                                DropdownImpl(
                                     text = string,
+                                    isSelected = false,
                                     optionSize = rebootItems.size,
                                     onSelectedIndexChange = {
                                         when (index) {
@@ -378,15 +395,17 @@ private fun TopBar(
                         contentDescription = stringResource(id = R.string.settings)
                     )
 
-                    ListPopup(
-                        show = showDropdownMoreOptions,
-                        alignment = PopupPositionProvider.Align.Right,
+                    SuperListPopup(
+                        show = showDropdownMoreOptions.value,
+                        popupPositionProvider = ListPopupDefaults.ContextMenuPositionProvider,
+                        alignment = PopupPositionProvider.Align.TopEnd,
                         onDismissRequest = { showDropdownMoreOptions.value = false }
                     ) {
                         ListPopupColumn {
                             moreItems.forEachIndexed { index, string ->
-                                DropdownItem(
+                                DropdownImpl(
                                     text = string,
+                                    isSelected = false,
                                     optionSize = moreItems.size,
                                     onSelectedIndexChange = {
                                         when (index) {
@@ -426,7 +445,7 @@ private fun StatusCard(
 
     val prefs = APApplication.sharedPreferences
     val colorMode = prefs.getInt("color_mode", 0)
-    val isMonet = colorMode < 3
+    val isMonet = colorMode >= 3
     val isDark = isInDarkTheme(colorMode)
 
     Row(
@@ -1011,8 +1030,8 @@ fun LearnMoreCard() {
 }
 
 private enum class ApatchUninstallOption(
-    @StringRes val titleRes: Int,
-    @StringRes val descRes: Int,
+    @param:StringRes val titleRes: Int,
+    @param:StringRes val descRes: Int,
     val icon: ImageVector,
 ) {
     PATCH_ONLY(
@@ -1036,7 +1055,7 @@ fun UninstallDialog(showDialog: MutableState<Boolean>, navigator: DestinationsNa
 
     SuperDialog(
         title = stringResource(R.string.home_dialog_uninstall_title),
-        show = showDialog,
+        show = showDialog.value,
         onDismissRequest = { showDialog.value = false }
     ) {
         Column(

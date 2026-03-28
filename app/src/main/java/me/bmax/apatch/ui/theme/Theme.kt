@@ -1,5 +1,7 @@
 package me.bmax.apatch.ui.theme
 
+import android.content.Context
+import android.content.SharedPreferences
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
@@ -18,6 +20,25 @@ val LocalEnableLiquidGlass = staticCompositionLocalOf { false }
 val LocalBottomBarVisible = staticCompositionLocalOf<MutableState<Boolean>> { mutableStateOf(true) }
 val LocalMainPagerState = staticCompositionLocalOf<me.bmax.apatch.ui.MainPagerState?> { null }
 
+private const val PREF_MIGRATED_V2 = "color_mode_migrated_v2"
+
+fun migrateColorModeIfNeeded(context: Context) {
+    val prefs = context.getSharedPreferences("config", Context.MODE_PRIVATE)
+    if (prefs.getBoolean(PREF_MIGRATED_V2, false)) return
+
+    val oldMode = prefs.getInt("color_mode", 0)
+    val newMode = when (oldMode) {
+        0 -> 3  // MonetSystem
+        1 -> 4  // MonetLight
+        2 -> 5  // MonetDark
+        3 -> 0  // System
+        4 -> 1  // Light
+        5 -> 2  // Dark
+        else -> oldMode
+    }
+    prefs.edit().putInt("color_mode", newMode).putBoolean(PREF_MIGRATED_V2, true).apply()
+}
+
 @Composable
 fun APatchTheme(
     colorMode: Int = 0,
@@ -26,26 +47,22 @@ fun APatchTheme(
 ) {
     val isDark = isSystemInDarkTheme()
     val controller = when (colorMode) {
-        0 -> ThemeController(
+        0 -> ThemeController(ColorSchemeMode.System)
+        1 -> ThemeController(ColorSchemeMode.Light)
+        2 -> ThemeController(ColorSchemeMode.Dark)
+        3 -> ThemeController(
             ColorSchemeMode.MonetSystem,
             keyColor = keyColor,
             isDark = isDark
         )
-
-        1 -> ThemeController(
+        4 -> ThemeController(
             ColorSchemeMode.MonetLight,
             keyColor = keyColor,
         )
-
-        2 -> ThemeController(
+        5 -> ThemeController(
             ColorSchemeMode.MonetDark,
             keyColor = keyColor,
         )
-
-        3 -> ThemeController(ColorSchemeMode.System)
-        4 -> ThemeController(ColorSchemeMode.Light)
-        5 -> ThemeController(ColorSchemeMode.Dark)
-
         else -> ThemeController(ColorSchemeMode.System)
     }
     return MiuixTheme(
@@ -61,8 +78,8 @@ fun APatchTheme(
 @ReadOnlyComposable
 fun isInDarkTheme(themeMode: Int): Boolean {
     return when (themeMode) {
-        1, 4 -> false  // MonetLight, Light
-        2, 5 -> true   // MonetDark, Dark
-        else -> isSystemInDarkTheme()  // MonetSystem (0) or System (3)
+        1, 4 -> false  // Light, MonetLight
+        2, 5 -> true   // Dark, MonetDark
+        else -> isSystemInDarkTheme()  // System (0) or MonetSystem (3)
     }
 }

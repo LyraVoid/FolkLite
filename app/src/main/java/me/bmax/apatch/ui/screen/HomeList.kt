@@ -69,7 +69,6 @@ import me.bmax.apatch.APApplication
 import me.bmax.apatch.Natives
 import me.bmax.apatch.R
 import me.bmax.apatch.apApp
-import me.bmax.apatch.ui.component.DropdownItem
 import me.bmax.apatch.ui.component.rememberConfirmDialog
 import me.bmax.apatch.ui.viewmodel.PatchesViewModel
 import me.bmax.apatch.util.LatestVersionInfo
@@ -81,19 +80,21 @@ import me.bmax.apatch.util.reboot
 import top.yukonga.miuix.kmp.basic.Button
 import top.yukonga.miuix.kmp.basic.Card
 import top.yukonga.miuix.kmp.basic.CardDefaults
+import top.yukonga.miuix.kmp.basic.DropdownImpl
 import top.yukonga.miuix.kmp.basic.Icon
 import top.yukonga.miuix.kmp.basic.IconButton
-import top.yukonga.miuix.kmp.basic.ListPopup
 import top.yukonga.miuix.kmp.basic.ListPopupColumn
+import top.yukonga.miuix.kmp.basic.ListPopupDefaults
 import top.yukonga.miuix.kmp.basic.MiuixScrollBehavior
+import top.yukonga.miuix.kmp.basic.ScrollBehavior
 import top.yukonga.miuix.kmp.basic.PopupPositionProvider
 import top.yukonga.miuix.kmp.basic.Scaffold
-import top.yukonga.miuix.kmp.basic.ScrollBehavior
 import top.yukonga.miuix.kmp.basic.Text
 import top.yukonga.miuix.kmp.basic.TextButton
 import top.yukonga.miuix.kmp.basic.TextField
 import top.yukonga.miuix.kmp.basic.TopAppBar
 import top.yukonga.miuix.kmp.extra.SuperDialog
+import top.yukonga.miuix.kmp.extra.SuperListPopup
 import top.yukonga.miuix.kmp.theme.MiuixTheme
 import top.yukonga.miuix.kmp.basic.ButtonDefaults
 import top.yukonga.miuix.kmp.utils.overScrollVertical
@@ -168,7 +169,7 @@ private fun AuthFailedTipDialogList(showDialog: MutableState<Boolean>) {
     SuperDialog(
         title = stringResource(R.string.home_dialog_auth_fail_title),
         summary = stringResource(R.string.home_dialog_auth_fail_content),
-        show = showDialog,
+        show = showDialog.value,
         onDismissRequest = { showDialog.value = false },
     ) {
         Spacer(Modifier.height(12.dp))
@@ -195,7 +196,7 @@ private fun AuthSuperKeyList(showDialog: MutableState<Boolean>, showFailedDialog
     var enable by remember { mutableStateOf(false) }
 
     SuperDialog(
-        show = showDialog,
+        show = showDialog.value,
         title = stringResource(R.string.home_auth_key_title),
         summary = stringResource(R.string.home_auth_key_desc),
         onDismissRequest = { showDialog.value = false }
@@ -304,15 +305,17 @@ private fun TopBarList(
                         contentDescription = stringResource(id = R.string.reboot)
                     )
 
-                    ListPopup(
-                        show = howDropdownReboot,
-                        alignment = PopupPositionProvider.Align.Right,
+                    SuperListPopup(
+                        show = howDropdownReboot.value,
+                        popupPositionProvider = ListPopupDefaults.ContextMenuPositionProvider,
+                        alignment = PopupPositionProvider.Align.TopEnd,
                         onDismissRequest = { howDropdownReboot.value = false }
                     ) {
                         ListPopupColumn {
                             rebootItems.forEachIndexed { index, string ->
-                                DropdownItem(
+                                DropdownImpl(
                                     text = string,
+                                    isSelected = false,
                                     optionSize = rebootItems.size,
                                     onSelectedIndexChange = {
                                         when (index) {
@@ -339,15 +342,17 @@ private fun TopBarList(
                         contentDescription = stringResource(id = R.string.settings)
                     )
 
-                    ListPopup(
-                        show = showDropdownMoreOptions,
-                        alignment = PopupPositionProvider.Align.Right,
+                    SuperListPopup(
+                        show = showDropdownMoreOptions.value,
+                        popupPositionProvider = ListPopupDefaults.ContextMenuPositionProvider,
+                        alignment = PopupPositionProvider.Align.TopEnd,
                         onDismissRequest = { showDropdownMoreOptions.value = false }
                     ) {
                         ListPopupColumn {
                             moreItems.forEachIndexed { index, string ->
-                                DropdownItem(
+                                DropdownImpl(
                                     text = string,
+                                    isSelected = false,
                                     optionSize = moreItems.size,
                                     onSelectedIndexChange = {
                                         when (index) {

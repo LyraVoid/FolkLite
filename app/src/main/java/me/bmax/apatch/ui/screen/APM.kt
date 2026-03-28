@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.ui.unit.sp
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -23,20 +24,24 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Archive
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.InstallMobile
 import androidx.compose.material.icons.filled.OpenInBrowser
 import androidx.compose.material.icons.filled.CloudDownload
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material.icons.filled.Restore
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.outlined.Delete
 import com.ramcosta.composedestinations.generated.destinations.OnlineAPMModuleScreenDestination
 import androidx.compose.runtime.Composable
@@ -97,13 +102,11 @@ import top.yukonga.miuix.kmp.basic.IconButton
 import top.yukonga.miuix.kmp.basic.Scaffold
 import top.yukonga.miuix.kmp.basic.Text
 import top.yukonga.miuix.kmp.theme.MiuixTheme
-import top.yukonga.miuix.kmp.basic.FloatingActionButton
 import top.yukonga.miuix.kmp.basic.HorizontalDivider
 import top.yukonga.miuix.kmp.basic.InputField
 import top.yukonga.miuix.kmp.basic.MiuixScrollBehavior
 import top.yukonga.miuix.kmp.basic.ScrollBehavior
 import top.yukonga.miuix.kmp.basic.PullToRefresh
-import top.yukonga.miuix.kmp.basic.SearchBar
 import top.yukonga.miuix.kmp.basic.Switch
 import top.yukonga.miuix.kmp.basic.TopAppBar
 import top.yukonga.miuix.kmp.utils.overScrollVertical
@@ -239,19 +242,22 @@ fun APModuleScreen(navigator: DestinationsNavigator) {
                     animationSpec = tween(durationMillis = 300),
                     label = "fabOffset"
                 )
-                val fabContent: @Composable () -> Unit = {
-                    FloatingActionButton(
-                        containerColor = MiuixTheme.colorScheme.primary,
-                        modifier = Modifier.padding(bottom = 30.dp),
-                        onClick = {
-                            val intent = Intent(Intent.ACTION_GET_CONTENT)
-                            intent.type = "application/zip"
+            val fabContent: @Composable () -> Unit = {
+                IconButton(
+                    modifier = Modifier
+                        .padding(bottom = 30.dp)
+                        .size(52.dp)
+                        .border(1.dp, MiuixTheme.colorScheme.primary, CircleShape)
+                        .background(MiuixTheme.colorScheme.surface, CircleShape),
+                    onClick = {
+                        val intent = Intent(Intent.ACTION_GET_CONTENT)
+                        intent.type = "application/zip"
                             selectZipLauncher.launch(intent)
                         }) {
                         Icon(
                             imageVector = Icons.Default.Archive,
                             contentDescription = null,
-                            tint = MiuixTheme.colorScheme.onPrimary
+                            tint = MiuixTheme.colorScheme.primary
                         )
                     }
                 }
@@ -460,27 +466,21 @@ private fun ModuleList(
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 5.dp)
+                .padding(start = 12.dp, end = 12.dp, top = 5.dp)
                 .zIndex(10f)
         ) {
-            SearchBar(
-                inputField = {
-                    InputField(
-                        query = viewModel.search,
-                        onQueryChange = { viewModel.search = it },
-                        onSearch = {
-                            expanded = false
-                        },
-                        expanded = expanded,
-                        onExpandedChange = {
-                            expanded = it
-                            if (!it) viewModel.search = ""
-                        }
-                    )
-                },
+            InputField(
+                query = viewModel.search,
+                onQueryChange = { viewModel.search = it },
+                onSearch = { expanded = false },
                 expanded = expanded,
-                onExpandedChange = { expanded = it },
-                content = {}
+                onExpandedChange = {
+                    expanded = it
+                    if (!it) viewModel.search = ""
+                },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 12.dp, vertical = 6.dp),
             )
         }
         LazyColumn(

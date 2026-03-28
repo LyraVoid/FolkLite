@@ -67,7 +67,7 @@ import me.bmax.apatch.util.reboot
 import top.yukonga.miuix.kmp.basic.Button
 import top.yukonga.miuix.kmp.basic.Card
 import top.yukonga.miuix.kmp.basic.CircularProgressIndicator
-import top.yukonga.miuix.kmp.basic.FloatingActionButton
+
 import top.yukonga.miuix.kmp.basic.Icon
 import top.yukonga.miuix.kmp.basic.IconButton
 import top.yukonga.miuix.kmp.basic.Scaffold
@@ -102,18 +102,17 @@ fun Patches(mode: PatchesViewModel.PatchMode) {
     }, floatingActionButton = {
         if (viewModel.needReboot) {
             val reboot = stringResource(id = R.string.reboot)
-            FloatingActionButton(
+            IconButton(
                 onClick = {
                     scope.launch { withContext(Dispatchers.IO) { reboot() } }
-                },
-                content = {
-                    Icon(
-                        imageVector = Icons.Filled.Refresh,
-                        contentDescription = reboot,
-                        tint = MiuixTheme.colorScheme.onPrimary
-                    )
-                },
-            )
+                }
+            ) {
+                Icon(
+                    imageVector = Icons.Filled.Refresh,
+                    contentDescription = reboot,
+                    tint = MiuixTheme.colorScheme.primary
+                )
+            }
         }
     }, popupHost = {}
     ) { innerPadding ->
@@ -295,7 +294,7 @@ private fun ExtraConfigDialog(
     var args by remember { mutableStateOf(kpmInfo.args) }
 
     SuperDialog(
-        show = show,
+        show = show.value,
         title = stringResource(R.string.kpm_control_dialog_title),
         onDismissRequest = { show.value = false },
         content = {

@@ -35,12 +35,12 @@ import androidx.compose.material.icons.rounded.HideImage
 import androidx.compose.material.icons.rounded.Language
 import androidx.compose.material.icons.rounded.Lock
 import androidx.compose.material.icons.rounded.Menu
-import androidx.compose.material.icons.rounded.OpenInNew
+import androidx.compose.material.icons.automirrored.rounded.OpenInNew
 import androidx.compose.material.icons.rounded.Palette
 import androidx.compose.material.icons.rounded.Restore
+import androidx.compose.material.icons.automirrored.rounded.Send
+import androidx.compose.material.icons.automirrored.rounded.Sort
 import androidx.compose.material.icons.rounded.SwapHoriz
-import androidx.compose.material.icons.rounded.Send
-import androidx.compose.material.icons.rounded.Sort
 import androidx.compose.material.icons.rounded.SystemUpdate
 import androidx.compose.material.icons.rounded.VerifiedUser
 import androidx.compose.material.icons.rounded.VisibilityOff
@@ -106,7 +106,6 @@ import top.yukonga.miuix.kmp.basic.TextButton
 import top.yukonga.miuix.kmp.basic.TextField
 import top.yukonga.miuix.kmp.basic.TopAppBar
 import top.yukonga.miuix.kmp.extra.SuperArrow
-import top.yukonga.miuix.kmp.extra.SuperBottomSheet
 import top.yukonga.miuix.kmp.extra.SuperDialog
 import top.yukonga.miuix.kmp.extra.SuperDropdown
 import top.yukonga.miuix.kmp.extra.SuperSwitch
@@ -221,7 +220,7 @@ fun SettingScreen(navigator: DestinationsNavigator) {
         )
         val homeLayoutValues = listOf("list", "default")
         var currentHomeLayout by rememberSaveable { mutableStateOf(prefs.getString("home_layout_style", "list") ?: "list") }
-        var homeLayoutIndex = homeLayoutValues.indexOf(currentHomeLayout).let { if (it == -1) 0 else it }
+        val homeLayoutIndex = homeLayoutValues.indexOf(currentHomeLayout).let { if (it == -1) 0 else it }
 
         val dpiItems = listOf(
             stringResource(id = R.string.dpi_preset_system_default),
@@ -259,7 +258,7 @@ fun SettingScreen(navigator: DestinationsNavigator) {
                         summary = stringResource(id = R.string.settings_theme_summary),
                         items = themeItems,
                         selectedIndex = themeMode,
-                        leftAction = {
+                        startAction = {
                             Icon(
                                 Icons.Rounded.Palette,
                                 null,
@@ -272,7 +271,7 @@ fun SettingScreen(navigator: DestinationsNavigator) {
                         }
                     )
 
-                    AnimatedVisibility(visible = themeMode in 0..2) {
+                    AnimatedVisibility(visible = themeMode in 3..5) {
                         val colorItems = listOf(
                             stringResource(id = R.string.settings_key_color_default),
                             stringResource(id = R.string.color_red),
@@ -319,7 +318,7 @@ fun SettingScreen(navigator: DestinationsNavigator) {
                             summary = stringResource(id = R.string.settings_key_color_summary),
                             items = colorItems,
                             selectedIndex = keyColorIndex,
-                            leftAction = {
+                            startAction = {
                                 Icon(
                                     Icons.Rounded.Palette,
                                     null,
@@ -341,7 +340,7 @@ fun SettingScreen(navigator: DestinationsNavigator) {
                             title = stringResource(id = R.string.settings_enable_blur),
                             summary = stringResource(id = R.string.settings_enable_blur_summary),
                             checked = enableBlur,
-                            leftAction = {
+                            startAction = {
                                 Icon(
                                     Icons.Rounded.BlurOn,
                                     null,
@@ -359,7 +358,7 @@ fun SettingScreen(navigator: DestinationsNavigator) {
                         title = stringResource(id = R.string.settings_floating_bottom_bar),
                         summary = stringResource(id = R.string.settings_floating_bottom_bar_summary),
                         checked = enableFloatingBottomBar,
-                        leftAction = {
+                        startAction = {
                             Icon(
                                 Icons.Rounded.Dock,
                                 null,
@@ -382,7 +381,7 @@ fun SettingScreen(navigator: DestinationsNavigator) {
                             title = stringResource(id = R.string.settings_enable_liquid_glass),
                             summary = stringResource(id = R.string.settings_enable_liquid_glass_summary),
                             checked = enableLiquidGlass,
-                            leftAction = {
+                            startAction = {
                                 Icon(
                                     Icons.Rounded.AutoFixHigh,
                                     null,
@@ -401,7 +400,7 @@ fun SettingScreen(navigator: DestinationsNavigator) {
                         summary = stringResource(id = R.string.settings_home_layout_style_summary),
                         items = homeLayoutItems,
                         selectedIndex = homeLayoutIndex,
-                        leftAction = {
+                        startAction = {
                             Icon(
                                 Icons.Rounded.Dashboard,
                                 null,
@@ -417,7 +416,7 @@ fun SettingScreen(navigator: DestinationsNavigator) {
                     SuperArrow(
                         title = stringResource(id = R.string.settings_nav_layout_title),
                         summary = stringResource(id = R.string.settings_nav_layout_summary),
-                        leftAction = {
+                        startAction = {
                             Icon(
                                 Icons.Rounded.Menu,
                                 null,
@@ -434,7 +433,7 @@ fun SettingScreen(navigator: DestinationsNavigator) {
                         summary = stringResource(id = R.string.settings_app_dpi_summary),
                         items = dpiItems,
                         selectedIndex = dpiIndex,
-                        leftAction = {
+                        startAction = {
                             Icon(
                                 Icons.Rounded.ZoomIn,
                                 null,
@@ -455,7 +454,7 @@ fun SettingScreen(navigator: DestinationsNavigator) {
                         summary = stringResource(R.string.settings_app_language_summary),
                         items = languages.toList(),
                         selectedIndex = langSelectedIndex,
-                        leftAction = {
+                        startAction = {
                             Icon(
                                 Icons.Rounded.Language,
                                 null,
@@ -485,7 +484,7 @@ fun SettingScreen(navigator: DestinationsNavigator) {
                         title = stringResource(id = R.string.settings_alt_icon),
                         summary = stringResource(id = R.string.settings_alt_icon_summary),
                         checked = useAltIcon,
-                        leftAction = {
+                        startAction = {
                             Icon(
                                 Icons.Rounded.SwapHoriz,
                                 null,
@@ -514,7 +513,7 @@ fun SettingScreen(navigator: DestinationsNavigator) {
                         SuperArrow(
                             title = stringResource(R.string.clear_super_key),
                             summary = stringResource(R.string.clear_super_key_summary),
-                            leftAction = {
+                            startAction = {
                                 Icon(
                                     Icons.Rounded.VpnKey,
                                     null,
@@ -525,7 +524,7 @@ fun SettingScreen(navigator: DestinationsNavigator) {
                         )
                         if (showClearKeyDialog.value) {
                             SuperDialog(
-                                show = showClearKeyDialog,
+                                show = showClearKeyDialog.value,
                                 title = clearKeyDialogTitle,
                                 summary = clearKeyDialogContent
                             ) {
@@ -558,7 +557,7 @@ fun SettingScreen(navigator: DestinationsNavigator) {
                         title = stringResource(id = R.string.settings_donot_store_superkey),
                         summary = stringResource(id = R.string.settings_donot_store_superkey_summary),
                         checked = bSkipStoreSuperKey,
-                        leftAction = {
+                        startAction = {
                             Icon(
                                 Icons.Rounded.Lock,
                                 null,
@@ -576,7 +575,7 @@ fun SettingScreen(navigator: DestinationsNavigator) {
                             title = stringResource(id = R.string.settings_global_namespace_mode),
                             summary = stringResource(id = R.string.settings_global_namespace_mode_summary),
                             checked = isGlobalNamespaceEnabled,
-                            leftAction = {
+                            startAction = {
                                 Icon(
                                     Icons.Rounded.AccountTree,
                                     null,
@@ -596,7 +595,7 @@ fun SettingScreen(navigator: DestinationsNavigator) {
                         SuperArrow(
                             title = stringResource(R.string.setting_reset_su_path),
                             summary = stringResource(R.string.setting_reset_su_path_summary),
-                            leftAction = {
+                            startAction = {
                                 Icon(
                                     Icons.Rounded.Restore,
                                     null,
@@ -620,7 +619,7 @@ fun SettingScreen(navigator: DestinationsNavigator) {
                             title = stringResource(id = R.string.settings_magic_mount),
                             summary = stringResource(id = R.string.settings_magic_mount_summary),
                             checked = isMagicMountEnabled,
-                            leftAction = {
+                            startAction = {
                                 Icon(
                                     Icons.Rounded.Extension,
                                     null,
@@ -637,7 +636,7 @@ fun SettingScreen(navigator: DestinationsNavigator) {
                             title = stringResource(id = R.string.settings_hide_service),
                             summary = stringResource(id = R.string.settings_hide_service_summary),
                             checked = isHideServiceEnabled,
-                            leftAction = {
+                            startAction = {
                                 Icon(
                                     Icons.Rounded.VisibilityOff,
                                     null,
@@ -653,7 +652,7 @@ fun SettingScreen(navigator: DestinationsNavigator) {
                         SuperArrow(
                             title = stringResource(id = R.string.settings_umount_service),
                             summary = stringResource(id = R.string.settings_umount_service_summary),
-                            leftAction = {
+                            startAction = {
                                 Icon(
                                     Icons.Rounded.Eject,
                                     null,
@@ -681,9 +680,9 @@ fun SettingScreen(navigator: DestinationsNavigator) {
                         title = stringResource(id = R.string.settings_apm_stay_on_page),
                         summary = stringResource(id = R.string.settings_apm_stay_on_page_summary),
                         checked = stayOnPage,
-                        leftAction = {
+                        startAction = {
                             Icon(
-                                Icons.Rounded.OpenInNew,
+                                Icons.AutoMirrored.Rounded.OpenInNew,
                                 null,
                                 modifier = Modifier.padding(end = 6.dp)
                             )
@@ -701,9 +700,9 @@ fun SettingScreen(navigator: DestinationsNavigator) {
                         title = stringResource(id = R.string.settings_apm_sorting),
                         summary = stringResource(id = R.string.settings_apm_sorting_summary),
                         checked = apmSortEnabled,
-                        leftAction = {
+                        startAction = {
                             Icon(
-                                Icons.Rounded.Sort,
+                                Icons.AutoMirrored.Rounded.Sort,
                                 null,
                                 modifier = Modifier.padding(end = 6.dp)
                             )
@@ -721,7 +720,7 @@ fun SettingScreen(navigator: DestinationsNavigator) {
                         title = stringResource(id = R.string.enable_web_debugging),
                         summary = stringResource(id = R.string.enable_web_debugging_summary),
                         checked = enableWebDebugging,
-                        leftAction = {
+                        startAction = {
                             Icon(
                                 Icons.Rounded.BugReport,
                                 null,
@@ -743,7 +742,7 @@ fun SettingScreen(navigator: DestinationsNavigator) {
                         title = stringResource(id = R.string.settings_apm_install_confirm),
                         summary = stringResource(id = R.string.settings_apm_install_confirm_summary),
                         checked = installConfirm,
-                        leftAction = {
+                        startAction = {
                             Icon(
                                 Icons.Rounded.VerifiedUser,
                                 null,
@@ -763,7 +762,7 @@ fun SettingScreen(navigator: DestinationsNavigator) {
                         title = stringResource(id = R.string.hide_about_card),
                         summary = stringResource(id = R.string.hide_about_card_summary),
                         checked = hideAboutCard,
-                        leftAction = {
+                        startAction = {
                             Icon(
                                 Icons.Rounded.HideImage,
                                 null,
@@ -783,7 +782,7 @@ fun SettingScreen(navigator: DestinationsNavigator) {
                         title = stringResource(id = R.string.settings_check_update),
                         summary = stringResource(id = R.string.settings_check_update_summary),
                         checked = checkUpdate,
-                        leftAction = {
+                        startAction = {
                             Icon(
                                 Icons.Rounded.SystemUpdate,
                                 null,
@@ -807,9 +806,9 @@ fun SettingScreen(navigator: DestinationsNavigator) {
                     SuperArrow(
                         title = stringResource(R.string.send_log),
                         summary = stringResource(R.string.send_log_summary),
-                        leftAction = {
+                        startAction = {
                             Icon(
-                                Icons.Rounded.Send,
+                                Icons.AutoMirrored.Rounded.Send,
                                 null,
                                 modifier = Modifier.padding(end = 6.dp)
                             )
@@ -836,55 +835,57 @@ fun LogBottomSheet(
     loadingDialog: LoadingDialogHandle,
     context: Context
 ) {
-    SuperBottomSheet(
-        show = showLogBottomSheet,
-        title = "Save Log", // tmp hard code strings
+    SuperDialog(
+        show = showLogBottomSheet.value,
+        title = "Save Log",
         onDismissRequest = { showLogBottomSheet.value = false }
     ) {
-        SuperArrow(
-            title = stringResource(R.string.save_log),
-            onClick = {
-                scope.launch {
-                    val formatter =
-                        DateTimeFormatter.ofPattern("yyyy-MM-dd_HH_mm")
-                    val current = LocalDateTime.now().format(formatter)
-                    exportBugreportLauncher.launch("APatch_bugreport_${current}.tar.gz")
-                    showLogBottomSheet.value = false
+        Column {
+            SuperArrow(
+                title = stringResource(R.string.save_log),
+                onClick = {
+                    scope.launch {
+                        val formatter =
+                            DateTimeFormatter.ofPattern("yyyy-MM-dd_HH_mm")
+                        val current = LocalDateTime.now().format(formatter)
+                        exportBugreportLauncher.launch("APatch_bugreport_${current}.tar.gz")
+                        showLogBottomSheet.value = false
+                    }
                 }
-            }
-        )
-        SuperArrow(
-            title = stringResource(R.string.send_log),
-            onClick = {
-                scope.launch {
-                    val bugreport = loadingDialog.withLoading {
-                        withContext(Dispatchers.IO) {
-                            getBugreportFile(context)
+            )
+            SuperArrow(
+                title = stringResource(R.string.send_log),
+                onClick = {
+                    scope.launch {
+                        val bugreport = loadingDialog.withLoading {
+                            withContext(Dispatchers.IO) {
+                                getBugreportFile(context)
+                            }
                         }
-                    }
 
-                    val uri: Uri = FileProvider.getUriForFile(
-                        context,
-                        "${BuildConfig.APPLICATION_ID}.fileprovider",
-                        bugreport
-                    )
-
-                    val shareIntent = Intent(Intent.ACTION_SEND).apply {
-                        putExtra(Intent.EXTRA_STREAM, uri)
-                        setDataAndType(uri, "application/gzip")
-                        addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-                    }
-
-                    context.startActivity(
-                        Intent.createChooser(
-                            shareIntent,
-                            context.getString(R.string.send_log)
+                        val uri: Uri = FileProvider.getUriForFile(
+                            context,
+                            "${BuildConfig.APPLICATION_ID}.fileprovider",
+                            bugreport
                         )
-                    )
-                    showLogBottomSheet.value = false
+
+                        val shareIntent = Intent(Intent.ACTION_SEND).apply {
+                            putExtra(Intent.EXTRA_STREAM, uri)
+                            setDataAndType(uri, "application/gzip")
+                            addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                        }
+
+                        context.startActivity(
+                            Intent.createChooser(
+                                shareIntent,
+                                context.getString(R.string.send_log)
+                            )
+                        )
+                        showLogBottomSheet.value = false
+                    }
                 }
-            }
-        )
+            )
+        }
     }
 }
 
@@ -898,7 +899,7 @@ fun ResetSUPathDialog(showDialog: MutableState<Boolean>) {
     }
 
     SuperDialog(
-        show = showDialog,
+        show = showDialog.value,
         title = stringResource(R.string.setting_reset_su_path),
         onDismissRequest = { showDialog.value = false }
     ) {

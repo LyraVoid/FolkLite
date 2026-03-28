@@ -44,24 +44,24 @@ import me.bmax.apatch.APApplication
 import me.bmax.apatch.Natives
 import me.bmax.apatch.R
 import me.bmax.apatch.apApp
-import me.bmax.apatch.ui.component.DropdownItem
 import me.bmax.apatch.ui.viewmodel.SuperUserViewModel
 import me.bmax.apatch.util.PkgConfig
 import top.yukonga.miuix.kmp.basic.Card
+import top.yukonga.miuix.kmp.basic.DropdownImpl
 import top.yukonga.miuix.kmp.basic.Icon
 import top.yukonga.miuix.kmp.basic.IconButton
 import top.yukonga.miuix.kmp.basic.InputField
-import top.yukonga.miuix.kmp.basic.ListPopup
-import top.yukonga.miuix.kmp.basic.PopupPositionProvider
 import top.yukonga.miuix.kmp.basic.ListPopupColumn
+import top.yukonga.miuix.kmp.basic.ListPopupDefaults
 import top.yukonga.miuix.kmp.basic.MiuixScrollBehavior
+import top.yukonga.miuix.kmp.basic.ScrollBehavior
 import top.yukonga.miuix.kmp.basic.PullToRefresh
 import top.yukonga.miuix.kmp.basic.Scaffold
-import top.yukonga.miuix.kmp.basic.ScrollBehavior
-import top.yukonga.miuix.kmp.basic.SearchBar
+import top.yukonga.miuix.kmp.basic.PopupPositionProvider
 import top.yukonga.miuix.kmp.basic.Switch
 import top.yukonga.miuix.kmp.basic.Text
 import top.yukonga.miuix.kmp.basic.TopAppBar
+import top.yukonga.miuix.kmp.extra.SuperListPopup
 import top.yukonga.miuix.kmp.extra.SuperSwitch
 import top.yukonga.miuix.kmp.theme.MiuixTheme
 import top.yukonga.miuix.kmp.utils.overScrollVertical
@@ -90,27 +90,21 @@ fun SuperUserScreen() {
                 Box (
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(top = 5.dp)
+                        .padding(start = 12.dp, end = 12.dp, top = 5.dp)
                         .zIndex(10f)
                 ) {
-                    SearchBar(
-                        inputField = {
-                            InputField(
-                                query = viewModel.search,
-                                onQueryChange = { viewModel.search = it },
-                                onSearch = {
-                                    expanded = false
-                                },
-                                expanded = expanded,
-                                onExpandedChange = {
-                                    expanded = it
-                                    if (!it) viewModel.search = ""
-                                }
-                            )
-                        },
+                    InputField(
+                        query = viewModel.search,
+                        onQueryChange = { viewModel.search = it },
+                        onSearch = { expanded = false },
                         expanded = expanded,
-                        onExpandedChange = { expanded = it },
-                        content = {}
+                        onExpandedChange = {
+                            expanded = it
+                            if (!it) viewModel.search = ""
+                        },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 12.dp, vertical = 6.dp)
                     )
                 }
                 LazyColumn(
@@ -149,14 +143,16 @@ fun SuperTopBar(
                     contentDescription = stringResource(id = R.string.settings)
                 )
 
-                ListPopup(
-                    show = showDropdown,
-                    onDismissRequest = { showDropdown.value = false },
-                    alignment = PopupPositionProvider.Align.Right
+                SuperListPopup(
+                    show = showDropdown.value,
+                    popupPositionProvider = ListPopupDefaults.ContextMenuPositionProvider,
+                    alignment = PopupPositionProvider.Align.TopEnd,
+                    onDismissRequest = { showDropdown.value = false }
                 ) {
                     ListPopupColumn {
-                        DropdownItem(
+                        DropdownImpl(
                             text = stringResource(R.string.su_refresh),
+                            isSelected = false,
                             optionSize = appListItemsCount,
                             index = 0,
                             onSelectedIndexChange = {
@@ -165,12 +161,13 @@ fun SuperTopBar(
                             }
                         )
 
-                        DropdownItem(
+                        DropdownImpl(
                             text = if (viewModel.showSystemApps) {
                                 stringResource(R.string.su_hide_system_apps)
                             } else {
                                 stringResource(R.string.su_show_system_apps)
                             },
+                            isSelected = false,
                             optionSize = appListItemsCount,
                             index = 1,
                             onSelectedIndexChange = {
