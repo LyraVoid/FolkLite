@@ -123,6 +123,7 @@ import me.bmax.apatch.ui.theme.LocalEnableFloatingBottomBar
 import me.bmax.apatch.ui.theme.LocalEnableLiquidGlass
 import me.bmax.apatch.ui.theme.LocalBottomBarVisible
 import me.bmax.apatch.ui.theme.LocalMainPagerState
+import me.bmax.apatch.ui.theme.LocalVisibleDestinations
 import me.bmax.apatch.ui.theme.migrateColorModeIfNeeded
 import me.bmax.apatch.ui.MainPagerState
 import me.bmax.apatch.ui.viewmodel.APModuleViewModel
@@ -234,6 +235,7 @@ class MainActivity : AppCompatActivity() {
             var enableBlur by remember { mutableStateOf(VisualConfig.enableBlur) }
             var enableFloatingBottomBar by remember { mutableStateOf(VisualConfig.enableFloatingBottomBar) }
             var floatingBottomBarAutoHide by remember { mutableStateOf(VisualConfig.floatingBottomBarAutoHide) }
+            var floatingBottomBarScrollHide by remember { mutableStateOf(VisualConfig.floatingBottomBarScrollHide) }
             var enableLiquidGlass by remember { mutableStateOf(VisualConfig.enableLiquidGlass) }
 
             DisposableEffect(prefs) {
@@ -244,6 +246,7 @@ class MainActivity : AppCompatActivity() {
                         "enable_blur" -> enableBlur = VisualConfig.enableBlur
                         "enable_floating_bottom_bar" -> enableFloatingBottomBar = VisualConfig.enableFloatingBottomBar
                         "floating_bottom_bar_auto_hide" -> floatingBottomBarAutoHide = VisualConfig.floatingBottomBarAutoHide
+                        "floating_bottom_bar_scroll_hide" -> floatingBottomBarScrollHide = VisualConfig.floatingBottomBarScrollHide
                         "enable_liquid_glass" -> enableLiquidGlass = VisualConfig.enableLiquidGlass
                     }
                 }
@@ -252,6 +255,38 @@ class MainActivity : AppCompatActivity() {
             }
 
             APatchTheme(colorMode = colorMode, keyColor = keyColor) {
+
+                    val state by APApplication.apStateLiveData.observeAsState(APApplication.State.UNKNOWN_STATE)
+                    val kPatchReady = state != APApplication.State.UNKNOWN_STATE
+                    val aPatchReady = state == APApplication.State.ANDROIDPATCH_INSTALLED
+                    val prefs = APApplication.sharedPreferences
+                    var showNavApm by remember { mutableStateOf(prefs.getBoolean("show_nav_apm", true)) }
+                    var showNavKpm by remember { mutableStateOf(prefs.getBoolean("show_nav_kpm", true)) }
+                    var showNavSuperUser by remember { mutableStateOf(prefs.getBoolean("show_nav_superuser", true)) }
+
+                    DisposableEffect(Unit) {
+                        val listener = SharedPreferences.OnSharedPreferenceChangeListener { sharedPrefs, key ->
+                            when (key) {
+                                "show_nav_apm" -> showNavApm = sharedPrefs.getBoolean(key, true)
+                                "show_nav_kpm" -> showNavKpm = sharedPrefs.getBoolean(key, true)
+                                "show_nav_superuser" -> showNavSuperUser = sharedPrefs.getBoolean(key, true)
+                            }
+                        }
+                        prefs.registerOnSharedPreferenceChangeListener(listener)
+                        onDispose { prefs.unregisterOnSharedPreferenceChangeListener(listener) }
+                    }
+
+                    val visibleDestinations = BottomBarDestination.entries
+                        .filter { d ->
+                            !(d.kPatchRequired && !kPatchReady) &&
+                                    !(d.aPatchRequired && !aPatchReady) &&
+                            when (d) {
+                                BottomBarDestination.AModule -> showNavApm
+                                BottomBarDestination.KModule -> showNavKpm
+                                BottomBarDestination.SuperUser -> showNavSuperUser
+                                else -> true
+                            }
+                        }
 
                     val bottomBarVisibleState = remember { mutableStateOf(true) }
                     val pageScale = me.bmax.apatch.util.PageScaleUtils.currentScale
@@ -262,7 +297,7 @@ class MainActivity : AppCompatActivity() {
 
                     val pagerState = rememberPagerState(
                         initialPage = 0,
-                        pageCount = { BottomBarDestination.entries.size }
+                        pageCount = { visibleDestinations.size }
                     )
                     val coroutineScope = rememberCoroutineScope()
                     val mainPagerState = remember(pagerState, coroutineScope, scaledDensity) {
@@ -278,6 +313,7 @@ class MainActivity : AppCompatActivity() {
                     CompositionLocalProvider(
                         LocalBottomBarVisible provides bottomBarVisibleState,
                         LocalMainPagerState provides mainPagerState,
+                        LocalVisibleDestinations provides visibleDestinations,
                     ) {
                     val navController = rememberNavController()
                     val navigator = navController.rememberDestinationsNavigator()
@@ -388,7 +424,7 @@ class MainActivity : AppCompatActivity() {
                     }
 
                     val showBottomBar = if (enableFloatingBottomBar) {
-                        showBottomBarRoute && isBottomBarVisible && !isScrollingDown.value
+                        showBottomBarRoute && isBottomBarVisible && !(floatingBottomBarScrollHide && isScrollingDown.value)
                     } else {
                         showBottomBarRoute
                     }
@@ -613,34 +649,32 @@ private fun BottomBar(
         }
     }
 
+    val kPatchReady = state != APApplication.State.UNKNOWN_STATE
+    val aPatchReady = state == APApplication.State.ANDROIDPATCH_INSTALLED
+
+    val visibleDestinations = BottomBarDestination.entries
+        .filter { d ->
+            !(d.kPatchRequired && !kPatchReady) &&
+                    !(d.aPatchRequired && !aPatchReady) &&
+            when (d) {
+                BottomBarDestination.AModule -> showNavApm
+                BottomBarDestination.KModule -> showNavKpm
+                BottomBarDestination.SuperUser -> showNavSuperUser
+                else -> true
+            }
+        }
+
     Crossfade(
         targetState = state,
         label = "BottomBarStateCrossfade"
     ) { state ->
-        val kPatchReady = state != APApplication.State.UNKNOWN_STATE
-        val aPatchReady = state == APApplication.State.ANDROIDPATCH_INSTALLED
+        val visibleDestinations = visibleDestinations
 
-        val visibleDestinations = BottomBarDestination.entries
-            .filter { d ->
-                !(d.kPatchRequired && !kPatchReady) &&
-                        !(d.aPatchRequired && !aPatchReady) &&
-                when (d) {
-                    BottomBarDestination.AModule -> showNavApm
-                    BottomBarDestination.KModule -> showNavKpm
-                    BottomBarDestination.SuperUser -> showNavSuperUser
-                    else -> true
-                }
-            }
-
-        val selectedIndex =
-            visibleDestinations.indexOfFirst { it == BottomBarDestination.entries.getOrNull(mainPagerState.selectedPage) }.coerceAtLeast(0)
+        val selectedIndex = mainPagerState.selectedPage.coerceIn(0, (visibleDestinations.size - 1).coerceAtLeast(0))
 
         val navigateToPage: (index: Int) -> Unit = { index ->
             onUserInteraction?.invoke()
-            val targetGlobalIndex = BottomBarDestination.entries.indexOf(visibleDestinations[index])
-            if (targetGlobalIndex >= 0) {
-                mainPagerState.animateToPage(targetGlobalIndex)
-            }
+            mainPagerState.animateToPage(index)
         }
 
         if (enableFloatingBottomBar && backdrop != null) {

@@ -7,18 +7,18 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootGraph
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
-import me.bmax.apatch.APApplication
 import me.bmax.apatch.ui.theme.LocalMainPagerState
+import me.bmax.apatch.ui.theme.LocalVisibleDestinations
 import me.bmax.apatch.util.VisualConfig
 
 @Destination<RootGraph>(start = true)
 @Composable
 fun MainScreen(navigator: DestinationsNavigator) {
     val mainPagerState = LocalMainPagerState.current ?: return
+    val visibleDestinations = LocalVisibleDestinations.current
 
     LaunchedEffect(mainPagerState.pagerState.currentPage) {
         mainPagerState.syncPage()
@@ -35,7 +35,7 @@ fun MainScreen(navigator: DestinationsNavigator) {
         userScrollEnabled = true,
         modifier = Modifier.fillMaxSize()
     ) { page ->
-        when (BottomBarDestination.entries.getOrNull(page)) {
+        when (visibleDestinations.getOrNull(page)) {
             BottomBarDestination.Home -> HomeScreen(navigator)
             BottomBarDestination.KModule -> KPModuleScreen(navigator)
             BottomBarDestination.SuperUser -> SuperUserScreen()

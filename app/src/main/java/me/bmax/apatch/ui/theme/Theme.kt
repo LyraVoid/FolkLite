@@ -9,6 +9,7 @@ import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.graphics.Color
+import me.bmax.apatch.ui.screen.BottomBarDestination
 import me.bmax.apatch.ui.webui.MonetColorsProvider.UpdateCss
 import top.yukonga.miuix.kmp.theme.ColorSchemeMode
 import top.yukonga.miuix.kmp.theme.MiuixTheme
@@ -19,6 +20,7 @@ val LocalEnableFloatingBottomBar = staticCompositionLocalOf { false }
 val LocalEnableLiquidGlass = staticCompositionLocalOf { false }
 val LocalBottomBarVisible = staticCompositionLocalOf<MutableState<Boolean>> { mutableStateOf(true) }
 val LocalMainPagerState = staticCompositionLocalOf<me.bmax.apatch.ui.MainPagerState?> { null }
+val LocalVisibleDestinations = staticCompositionLocalOf { emptyList<BottomBarDestination>() }
 
 private const val PREF_MIGRATED_V2 = "color_mode_migrated_v2"
 
