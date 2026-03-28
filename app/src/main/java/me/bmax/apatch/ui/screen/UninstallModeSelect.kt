@@ -18,7 +18,7 @@ import top.yukonga.miuix.kmp.basic.Card
 import top.yukonga.miuix.kmp.basic.Icon
 import top.yukonga.miuix.kmp.basic.IconButton
 import top.yukonga.miuix.kmp.basic.Scaffold
-import top.yukonga.miuix.kmp.basic.TopAppBar
+import top.yukonga.miuix.kmp.basic.SmallTopAppBar
 import top.yukonga.miuix.kmp.extra.SuperArrow
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -65,7 +65,7 @@ fun UninstallModeSelectScreen(navigator: DestinationsNavigator) {
 
 @Composable
 private fun TopBar(onBack: () -> Unit = {}) {
-    TopAppBar(
+    SmallTopAppBar(
         title = stringResource(R.string.home_dialog_uninstall_title),
         navigationIcon = {
             IconButton(
