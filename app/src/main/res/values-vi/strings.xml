@@ -307,8 +307,12 @@
     <string name="kpm_autoload_first_time_confirm">Đã hiểu</string>
     <string name="settings_enable_blur">Enable blur</string>
     <string name="settings_enable_blur_summary">Blur effect for top bar and navigation bar</string>
-    <string name="settings_floating_bottom_bar">Floating bottom bar</string>
-    <string name="settings_floating_bottom_bar_summary">Use a floating capsule-style navigation bar</string>
+    <string name="settings_floating_bottom_bar">Thanh dưới nổi</string>
+    <string name="settings_floating_bottom_bar_summary">Sử dụng thanh điều hướng kiểu nổi hình viên thuốc</string>
+    <string name="settings_floating_bottom_bar_auto_hide">Tự động ẩn thanh nổi</string>
+    <string name="settings_floating_bottom_bar_auto_hide_summary">Tự động ẩn thanh điều hướng nổi sau 3 giây không hoạt động</string>
+    <string name="settings_floating_bottom_bar_scroll_hide">Cuộn để ẩn</string>
+    <string name="settings_floating_bottom_bar_scroll_hide_summary">Ẩn thanh điều hướng nổi khi cuộn xuống</string>
     <string name="settings_enable_liquid_glass">Liquid glass</string>
     <string name="settings_enable_liquid_glass_summary">Glass effects for floating bottom bar</string>
     <string name="settings_section_kernel">Kernel Patch</string>

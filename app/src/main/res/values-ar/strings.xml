@@ -305,8 +305,12 @@
     <string name="kpm_autoload_first_time_confirm">حسنًا</string>
     <string name="settings_enable_blur">Enable blur</string>
     <string name="settings_enable_blur_summary">Blur effect for top bar and navigation bar</string>
-    <string name="settings_floating_bottom_bar">Floating bottom bar</string>
-    <string name="settings_floating_bottom_bar_summary">Use a floating capsule-style navigation bar</string>
+    <string name="settings_floating_bottom_bar">شريط سفلي عائم</string>
+    <string name="settings_floating_bottom_bar_summary">استخدام شريط تنقل عائم على شكل كبسولة</string>
+    <string name="settings_floating_bottom_bar_auto_hide">إخفاء تلقائي</string>
+    <string name="settings_floating_bottom_bar_auto_hide_summary">إخفاء شريط التنقل العائم تلقائيًا بعد 3 ثوانٍ من عدم النشاط</string>
+    <string name="settings_floating_bottom_bar_scroll_hide">إخفاء عند التمرير</string>
+    <string name="settings_floating_bottom_bar_scroll_hide_summary">إخفاء شريط التنقل العائم عند التمرير للأسفل</string>
     <string name="settings_enable_liquid_glass">Liquid glass</string>
     <string name="settings_enable_liquid_glass_summary">Glass effects for floating bottom bar</string>
     <string name="settings_section_kernel">Kernel Patch</string>

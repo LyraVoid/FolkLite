@@ -307,8 +307,12 @@
     <string name="kpm_autoload_first_time_confirm">Entendi</string>
     <string name="settings_enable_blur">Enable blur</string>
     <string name="settings_enable_blur_summary">Blur effect for top bar and navigation bar</string>
-    <string name="settings_floating_bottom_bar">Floating bottom bar</string>
-    <string name="settings_floating_bottom_bar_summary">Use a floating capsule-style navigation bar</string>
+    <string name="settings_floating_bottom_bar">Barra inferior flutuante</string>
+    <string name="settings_floating_bottom_bar_summary">Usar uma barra de navegação flutuante em formato de cápsula</string>
+    <string name="settings_floating_bottom_bar_auto_hide">Ocultar automaticamente</string>
+    <string name="settings_floating_bottom_bar_auto_hide_summary">Ocultar automaticamente a barra de navegação flutuante após 3 segundos de inatividade</string>
+    <string name="settings_floating_bottom_bar_scroll_hide">Ocultar ao rolar</string>
+    <string name="settings_floating_bottom_bar_scroll_hide_summary">Ocultar a barra de navegação flutuante ao rolar para baixo</string>
     <string name="settings_enable_liquid_glass">Liquid glass</string>
     <string name="settings_enable_liquid_glass_summary">Glass effects for floating bottom bar</string>
     <string name="settings_section_kernel">Kernel Patch</string>

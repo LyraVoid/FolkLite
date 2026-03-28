@@ -23,8 +23,8 @@
     <string name="settings_app_language">魔法语言</string>
     <string name="system_default">默认魔法</string>
     <string name="settings_page_scale">魔法视界</string>
-    <string name="settings_alt_icon">Альтернатив дүрс</string>
-    <string name="settings_alt_icon_summary">Альтернатив програмын дүрс ашиглах</string>
+    <string name="settings_alt_icon">魔法变身形态</string>
+    <string name="settings_alt_icon_summary">使用另一种魔法使形态</string>
     <string name="settings_nav_layout_title">魔法导航</string>
     <string name="settings_nav_layout_summary">定制魔法导航按钮</string>
     <string name="settings_show_apm">显示星之魔法阵</string>
@@ -168,7 +168,7 @@
     <string name="apm_reboot_to_apply">重新觉醒后生效</string>
     <string name="apm_changelog">魔法更新记录</string>
     <string name="apm_update">更新魔法</string>
-    <string name="apm_updated">魔法升級済</string>
+    <string name="apm_updated">魔法已升级</string>
     <string name="apm_downloading">正在下载魔法阵: %s</string>
     <string name="apm_start_downloading">开始下载: %s</string>
     <string name="apm_new_version_available">发现新版本%s魔法阵，点击升级。</string>
@@ -338,68 +338,114 @@
     <string name="apm_mount_warning_button">我已知悉</string>
     <string name="kpm_autoload_do_not_show_again">不再显示</string>
     <string name="kpm_autoload_first_time_confirm">知道了</string>
-    <string name="settings_enable_blur">Enable blur</string>
-    <string name="settings_enable_blur_summary">Blur effect for top bar and navigation bar</string>
-    <string name="settings_floating_bottom_bar">Floating bottom bar</string>
-    <string name="settings_floating_bottom_bar_summary">Use a floating capsule-style navigation bar</string>
-    <string name="settings_enable_liquid_glass">Liquid glass</string>
-    <string name="settings_enable_liquid_glass_summary">Glass effects for floating bottom bar</string>
-    <string name="settings_section_kernel">Kernel Patch</string>
-    <string name="settings_section_module">Functions</string>
-    <string name="settings_section_customization">Customization</string>
-    <string name="settings_section_app">App</string>
+    <string name="settings_enable_blur">启用模糊魔法</string>
+    <string name="settings_enable_blur_summary">顶部栏和导航栏的模糊效果</string>
+    <string name="settings_floating_bottom_bar">悬浮魔法导航</string>
+    <string name="settings_floating_bottom_bar_summary">使用悬浮胶囊式魔法导航栏</string>
+    <string name="settings_enable_liquid_glass">液态魔法玻璃</string>
+    <string name="settings_enable_liquid_glass_summary">悬浮导航栏的玻璃效果</string>
+    <string name="settings_section_kernel">心之核心</string>
+    <string name="settings_section_module">魔法功能</string>
+    <string name="settings_section_customization">魔法定制</string>
+    <string name="settings_section_app">魔法工坊</string>
     <!-- Seed Color -->
-    <string name="settings_key_color">үрэвслийн өнгө</string>
-    <string name="settings_key_color_summary">Monet загварын үрэвслийн өнгө сонгох</string>
-    <string name="settings_key_color_default">Анхдагч (Цаасан зураг)</string>
-    <string name="color_red">Red</string>
-    <string name="color_pink">Pink</string>
-    <string name="color_purple">Purple</string>
-    <string name="color_deep_purple">Deep Purple</string>
-    <string name="color_indigo">Indigo</string>
-    <string name="color_blue">Blue</string>
-    <string name="color_cyan">Cyan</string>
-    <string name="color_teal">Teal</string>
-    <string name="color_green">Green</string>
-    <string name="color_yellow">Yellow</string>
-    <string name="color_amber">Amber</string>
-    <string name="color_orange">Orange</string>
-    <string name="color_brown">Brown</string>
-    <string name="color_blue_grey">Blue Grey</string>
-    <string name="color_sakura">Sakura</string>
+    <string name="settings_key_color">魔法种子颜色</string>
+    <string name="settings_key_color_summary">选择Monet魔法主题的种子颜色</string>
+    <string name="settings_key_color_default">默认（魔法画卷）</string>
+    <string name="color_red">火焰之红</string>
+    <string name="color_pink">樱花之粉</string>
+    <string name="color_purple">紫罗兰之紫</string>
+    <string name="color_deep_purple">神秘之紫</string>
+    <string name="color_indigo">靛蓝之夜</string>
+    <string name="color_blue">星空之蓝</string>
+    <string name="color_cyan">水之青</string>
+    <string name="color_teal">蓝绿之韵</string>
+    <string name="color_green">森林之绿</string>
+    <string name="color_yellow">阳光之黄</string>
+    <string name="color_amber">琥珀之光</string>
+    <string name="color_orange">晨光之橙</string>
+    <string name="color_brown">大地之棕</string>
+    <string name="color_blue_grey">月影之灰</string>
+    <string name="color_sakura">樱花飞舞</string>
 
     <!-- Settings Summaries -->
-    <string name="settings_theme_summary">Аппын өнгөний горимыг сонгох</string>
-    <string name="settings_home_layout_style_summary">Хүснэгт болон жагсаалт layout-ууд хооронд сэлгэх</string>
-    <string name="settings_page_scale_summary">Аппын харуулах нягтрал тохируулах</string>
-    <string name="settings_app_language_summary">Аппын хэлээ солих</string>
-    <string name="clear_super_key_summary">Хадгалагдсан SuperKey мэдээллийг устгах</string>
-    <string name="setting_reset_su_path_summary">su гүйцэтгэх файлын замыг дахин тохируулах</string>
-    <string name="send_log_summary">Алдааны тайланг экспортлох эсвэл хуваалцах</string>
+    <string name="settings_theme_summary">选择魔法工坊的颜色模式</string>
+    <string name="settings_home_layout_style_summary">在网格和列表布局之间切换</string>
+    <string name="settings_page_scale_summary">调整魔法工坊显示密度</string>
+    <string name="settings_app_language_summary">更改魔法语言</string>
+    <string name="clear_super_key_summary">清除已储存的心之密钥</string>
+    <string name="setting_reset_su_path_summary">重置魔法使路径</string>
+    <string name="send_log_summary">导出或分享魔法事故报告</string>
 
-    <string name="settings_section_about">Logs</string>
+    <string name="settings_section_about">魔法记录</string>
 
     <!-- Theme Mode -->
-    <string name="settings_theme_mode_system">Системд дагах</string>
-    <string name="settings_theme_mode_light">Гэгээн</string>
-    <string name="settings_theme_mode_dark">Харанхуй</string>
-    <string name="settings_theme_mode_monet_system">Monet (Системд дагах)</string>
-    <string name="settings_theme_mode_monet_light">Monet (Гэгээн)</string>
-    <string name="settings_theme_mode_monet_dark">Monet (Харанхуй)</string>
+    <string name="settings_theme_mode_system">跟随星界</string>
+    <string name="settings_theme_mode_light">光之形态</string>
+    <string name="settings_theme_mode_dark">暗之形态</string>
+    <string name="settings_theme_mode_monet_system">Monet（跟随星界）</string>
+    <string name="settings_theme_mode_monet_light">Monet（光之形态）</string>
+    <string name="settings_theme_mode_monet_dark">Monet（暗之形态）</string>
 
-    <string name="settings_predictive_back_gesture">Өмнөх татах чимээ</string>
-    <string name="settings_predictive_back_gesture_summary">Android 14+ өмнөх татах чимээний анимацийг идэвхжүүлэх</string>
+    <string name="settings_predictive_back_gesture">预知返回魔法</string>
+    <string name="settings_predictive_back_gesture_summary">启用Android 14+预知返回魔法动画</string>
 
     <!-- Module Shortcuts -->
-    <string name="apm_shortcut_created">Холбоос үүсгэлээ</string>
-    <string name="apm_shortcut_updated">Холбоос шинэчлэгдлээ</string>
-    <string name="apm_shortcut_not_supported">Ачаах төхөөрөмж нь холбоос сулруулахыг дэмждэггүй</string>
-    <string name="apm_shortcut_permission_tip_xiaomi">Аппын дүрс дээр удаан дараарай, холбоос зөвшөөрөл өгөөрэй</string>
-    <string name="apm_shortcut_permission_tip_oppo">Аппын дүрс дээр удаан дараарай, холбоос зөвшөөрөл өгөөрэй</string>
-    <string name="apm_shortcut_permission_tip_default">Холбоосыг олохын тулд аппын дүрс дээр удаан дараарай</string>
-    <string name="apm_shortcut_create_title">Холбоос үүсгэх</string>
-    <string name="apm_shortcut_action">Үйлдэл</string>
-    <string name="apm_shortcut_webui">WebUI</string>
-    <string name="apm_shortcut_name_label">Нэр</string>
-    <string name="apm_shortcut_create">Үүсгэх</string>
+    <string name="apm_shortcut_created">魔法传送门已创建</string>
+    <string name="apm_shortcut_updated">魔法传送门已更新</string>
+    <string name="apm_shortcut_not_supported">当前启动器不支持创建魔法传送门</string>
+    <string name="apm_shortcut_permission_tip_xiaomi">长按魔法工坊图标，授予传送门权限</string>
+    <string name="apm_shortcut_permission_tip_oppo">长按魔法工坊图标，授予传送门权限</string>
+    <string name="apm_shortcut_permission_tip_default">长按魔法工坊图标查找传送门</string>
+    <string name="apm_shortcut_create_title">创建魔法传送门</string>
+    <string name="apm_shortcut_action">魔法操作</string>
+    <string name="apm_shortcut_name_label">名称</string>
+    <string name="apm_shortcut_create">创建</string>
+    <string name="apm_shortcut_webui">魔法水晶球</string>
+
+    <string name="unofficial_warning_title">禁忌魔法</string>
+    <string name="unofficial_warning_summary">请勿向官方魔法塔提交此版本的魔法事故报告。</string>
+
+    <string name="settings_check_update_summary">打开魔法工坊时自动检查魔法升级</string>
+
+    <string name="home_need_update">发现新魔法版本</string>
+
+    <string name="apatch_version_update">契约等级: %1$s -&gt; %2$s</string>
+
+    <string name="home_ap_cando_update">升级魔法</string>
+
+    <string name="module_parse_failed">解析魔法阵信息失败，魔法阵可能已损坏：%s</string>
+    <string name="module_parse_reason">原因：%s</string>
+    <string name="module_install_confirm_extra">你仍然要安装此魔法阵吗？</string>
+    <string name="module_update_prompt_with_name">以下魔法阵将被升级：%1$s</string>
+    <string name="module_info_id">编号：%s</string>
+    <string name="module_info_name">名称：%s</string>
+    <string name="module_info_version">魔法等级：%s</string>
+    <string name="module_info_version_code">版本代号：%s</string>
+    <string name="module_info_author">创造者：%s</string>
+    <string name="module_info_description">魔法描述：%s</string>
+    <string name="module_install_prompt_with_name">以下魔法阵将被安装：%1$s</string>
+    <string name="module_error_no_prop">魔法阵契约（module.prop）未找到</string>
+    <string name="module_error_open_zip">无法打开魔法卷轴文件</string>
+    <string name="module_error_invalid_zip">无效的魔法卷轴格式</string>
+    <string name="module_error_prop_too_large">魔法阵契约过大（> 1MiB）</string>
+    <string name="module_error_missing_id">魔法阵契约缺少必要字段 \'id\'</string>
+    <string name="module_error_invalid_id">魔法阵编号 \'%s\' 无效</string>
+
+    <string name="apm_changelog_failed">获取魔法更新记录失败</string>
+
+    <string name="home_new_apatch_found">发现新版本%s魔法，点击升级。</string>
+
+    <string name="home_dialog_restore_image">恢复魔法容器</string>
+
+    <string name="crash_handle_copied">魔法事故记录已复制到剪贴板。</string>
+
+    <string name="kpm_autoload_fab_title">自动觉醒咒语</string>
+
+    <string name="settings_floating_bottom_bar_auto_hide">自动隐藏悬浮导航</string>
+    <string name="settings_floating_bottom_bar_auto_hide_summary">3秒无操作后自动隐藏悬浮魔法导航栏</string>
+    <string name="settings_floating_bottom_bar_scroll_hide">滑动隐藏悬浮魔法导航</string>
+    <string name="settings_floating_bottom_bar_scroll_hide_summary">向下滑动时隐藏悬浮魔法导航栏</string>
+
+    <string name="settings_section_general">通用设置</string>
 </resources>

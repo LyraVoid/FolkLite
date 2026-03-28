@@ -323,8 +323,12 @@
     <string name="kpm_autoload_first_time_confirm">理解しました</string>
     <string name="settings_enable_blur">Enable blur</string>
     <string name="settings_enable_blur_summary">Blur effect for top bar and navigation bar</string>
-    <string name="settings_floating_bottom_bar">Floating bottom bar</string>
-    <string name="settings_floating_bottom_bar_summary">Use a floating capsule-style navigation bar</string>
+    <string name="settings_floating_bottom_bar">フローティングボトムバー</string>
+    <string name="settings_floating_bottom_bar_summary">フローティングカプセル型ナビゲーションバーを使用</string>
+    <string name="settings_floating_bottom_bar_auto_hide">自動非表示</string>
+    <string name="settings_floating_bottom_bar_auto_hide_summary">3秒間操作がないとフローティングナビゲーションバーを自動的に非表示にする</string>
+    <string name="settings_floating_bottom_bar_scroll_hide">スクロールで非表示</string>
+    <string name="settings_floating_bottom_bar_scroll_hide_summary">下にスクロールするとフローティングナビゲーションバーを非表示にする</string>
     <string name="settings_enable_liquid_glass">Liquid glass</string>
     <string name="settings_enable_liquid_glass_summary">Glass effects for floating bottom bar</string>
     <string name="settings_section_kernel">Kernel Patch</string>

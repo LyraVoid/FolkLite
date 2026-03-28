@@ -305,8 +305,12 @@
     <string name="kpm_autoload_first_time_confirm">Понятно</string>
     <string name="settings_enable_blur">Enable blur</string>
     <string name="settings_enable_blur_summary">Blur effect for top bar and navigation bar</string>
-    <string name="settings_floating_bottom_bar">Floating bottom bar</string>
-    <string name="settings_floating_bottom_bar_summary">Use a floating capsule-style navigation bar</string>
+    <string name="settings_floating_bottom_bar">Плавающая нижняя панель</string>
+    <string name="settings_floating_bottom_bar_summary">Использовать плавающую панель навигации в виде капсулы</string>
+    <string name="settings_floating_bottom_bar_auto_hide">Автоскрытие панели</string>
+    <string name="settings_floating_bottom_bar_auto_hide_summary">Автоматически скрывать плавающую панель навигации через 3 секунды бездействия</string>
+    <string name="settings_floating_bottom_bar_scroll_hide">Скрывать при прокрутке</string>
+    <string name="settings_floating_bottom_bar_scroll_hide_summary">Скрывать плавающую панель навигации при прокрутке вниз</string>
     <string name="settings_enable_liquid_glass">Liquid glass</string>
     <string name="settings_enable_liquid_glass_summary">Glass effects for floating bottom bar</string>
     <string name="settings_section_kernel">Kernel Patch</string>

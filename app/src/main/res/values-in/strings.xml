@@ -305,8 +305,12 @@
     <string name="kpm_autoload_first_time_confirm">Mengerti</string>
     <string name="settings_enable_blur">Enable blur</string>
     <string name="settings_enable_blur_summary">Blur effect for top bar and navigation bar</string>
-    <string name="settings_floating_bottom_bar">Floating bottom bar</string>
-    <string name="settings_floating_bottom_bar_summary">Use a floating capsule-style navigation bar</string>
+    <string name="settings_floating_bottom_bar">Bilah bawah mengambang</string>
+    <string name="settings_floating_bottom_bar_summary">Gunakan bilah navigasi mengambang bergaya kapsul</string>
+    <string name="settings_floating_bottom_bar_auto_hide">Sembunyikan otomatis</string>
+    <string name="settings_floating_bottom_bar_auto_hide_summary">Otomatis sembunyikan bilah navigasi mengambang setelah 3 detik tidak aktif</string>
+    <string name="settings_floating_bottom_bar_scroll_hide">Sembunyikan saat gulir</string>
+    <string name="settings_floating_bottom_bar_scroll_hide_summary">Sembunyikan bilah navigasi mengambang saat menggulir ke bawah</string>
     <string name="settings_enable_liquid_glass">Liquid glass</string>
     <string name="settings_enable_liquid_glass_summary">Glass effects for floating bottom bar</string>
     <string name="settings_section_kernel">Kernel Patch</string>
