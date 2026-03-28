@@ -1,4 +1,5 @@
 *.iml
+CHANGELOG.md
 .gradle
 keystore.properties
 local.properties
