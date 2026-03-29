@@ -11,7 +11,7 @@
 
 **FolkLite** - FolkPatch の MIUIX 軽量版
 
-[MIUIX](https://github.com/YuKongA/miuix) コンポーネントライブラリで再構築された Root 管理ツール。FolkPatch の全コア機能を維持しながら、ネイティブな MIUI/HyperOS スタイルのビジュアル体験とインタラクションデザインを提供します。
+[MIUIX](https://github.com/compose-miuix-ui/miuix) コンポーネントライブラリで再構築された Root 管理ツール。FolkPatch の全コア機能を維持しながら、ネイティブな MIUI/HyperOS スタイルのビジュアル体験とインタラクションデザインを提供します。
 
 [📚 完全なドキュメントを読む](https://fp.mysqil.com/) →
 
@@ -88,9 +88,7 @@ FolkLite は FolkPatch の MIUIX 軽量ブランチです。洗練された MIUI
 - [KernelPatch](https://github.com/bmax121/KernelPatch/) - コアコンポーネント
 - [FolkPatch](https://github.com/matsuzaka-yuki/FolkPatch/) - アップストリームプロジェクト
 - [MIUIX](https://github.com/YuKongA/miuix) - MIUI/HyperOS デザインコンポーネントライブラリ
-- [Magisk](https://github.com/topjohnwu/Magisk) - magiskpolicy
 - [KernelSU](https://github.com/tiann/KernelSU) - アプリ UI と Magisk ライクなモジュールサポート
-- [Sukisu-Ultra](https://github.com/SukiSU-Ultra/SukiSU-Ultra) - 一部のインターフェースデザインを参照
 - [APatch](https://github.com/bmax121/APatch) - 上流ブランチ
 
 ## 📄 ライセンス
