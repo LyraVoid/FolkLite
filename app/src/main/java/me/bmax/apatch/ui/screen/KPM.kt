@@ -53,11 +53,8 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.ramcosta.composedestinations.generated.destinations.InstallScreenDestination
-import com.ramcosta.composedestinations.generated.destinations.PatchesDestination
-import com.ramcosta.composedestinations.generated.destinations.OnlineKPMModuleScreenDestination
-import com.ramcosta.composedestinations.generated.destinations.KpmAutoLoadConfigScreenDestination
-import com.ramcosta.composedestinations.navigation.DestinationsNavigator
+import me.bmax.apatch.ui.screen.TabNavigator
+
 import com.topjohnwu.superuser.nio.ExtendedFile
 import com.topjohnwu.superuser.nio.FileSystemManager
 import kotlinx.coroutines.Dispatchers
@@ -110,7 +107,7 @@ private const val TAG = "KernelPatchModule"
 private lateinit var targetKPMToControl: KPModel.KPMInfo
 
 @Composable
-fun KPModuleScreen(navigator: DestinationsNavigator) {
+fun KPModuleScreen(navigator: TabNavigator) {
 
     val state by APApplication.apStateLiveData.observeAsState(APApplication.State.UNKNOWN_STATE)
     if (state == APApplication.State.UNKNOWN_STATE) {
@@ -162,7 +159,7 @@ fun KPModuleScreen(navigator: DestinationsNavigator) {
                 val data = it.data ?: return@rememberLauncherForActivityResult
                 val uri = data.data ?: return@rememberLauncherForActivityResult
                 Log.i(TAG, "select zip result: $uri")
-                navigator.navigate(InstallScreenDestination(uri, MODULE_TYPE.KPM))
+                navigator.navigate("install_kpm/${android.net.Uri.encode(uri.toString())}/KPM")
             }
 
             val selectKpmLauncher = rememberLauncherForActivityResult(
@@ -229,7 +226,7 @@ fun KPModuleScreen(navigator: DestinationsNavigator) {
                                     onSelectedIndexChange = {
                                         when (label) {
                                             moduleEmbed -> navigator.navigate(
-                                                PatchesDestination(PatchesViewModel.PatchMode.PATCH_AND_INSTALL)
+                                                "patches/${PatchesViewModel.PatchMode.PATCH_AND_INSTALL.ordinal}"
                                             )
 
                                             moduleInstall -> {
@@ -247,7 +244,7 @@ fun KPModuleScreen(navigator: DestinationsNavigator) {
                                             }
 
                                             moduleAutoLoadConfig -> {
-                                                navigator.navigate(KpmAutoLoadConfigScreenDestination)
+                                                navigator.navigate("kpm_auto_load_config")
                                             }
                                         }
                                         expanded.value = false
@@ -514,11 +511,11 @@ private fun KPModuleList(
 }
 
 @Composable
-private fun TopBar(navigator: DestinationsNavigator) {
+private fun TopBar(navigator: TabNavigator) {
     TopAppBar(
         title = stringResource(R.string.kpm),
         actions = {
-            IconButton(onClick = { navigator.navigate(OnlineKPMModuleScreenDestination) }) {
+            IconButton(onClick = { navigator.navigate("online_kpm_module") }) {
                 Icon(
                     imageVector = Icons.Filled.CloudDownload,
                     contentDescription = "Online Modules"

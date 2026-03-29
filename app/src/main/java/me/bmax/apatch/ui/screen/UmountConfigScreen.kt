@@ -26,9 +26,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import com.ramcosta.composedestinations.annotation.Destination
-import com.ramcosta.composedestinations.annotation.RootGraph
-import com.ramcosta.composedestinations.navigation.DestinationsNavigator
+import me.bmax.apatch.ui.screen.TabNavigator
 import me.bmax.apatch.R
 import me.bmax.apatch.ui.component.UmountConfig
 import me.bmax.apatch.ui.component.UmountConfigManager
@@ -47,9 +45,8 @@ import top.yukonga.miuix.kmp.extra.SuperSwitch
 import top.yukonga.miuix.kmp.theme.MiuixTheme
 import top.yukonga.miuix.kmp.utils.overScrollVertical
 
-@Destination<RootGraph>
 @Composable
-fun UmountConfigScreen(navigator: DestinationsNavigator) {
+fun UmountConfigScreen(navigator: TabNavigator) {
     val context = LocalContext.current
     var isEnabled by remember { mutableStateOf(UmountConfigManager.isEnabled.value) }
     var paths by remember { mutableStateOf(UmountConfigManager.paths.value) }

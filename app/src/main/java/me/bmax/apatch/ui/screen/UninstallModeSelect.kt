@@ -7,10 +7,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.dropUnlessResumed
-import com.ramcosta.composedestinations.annotation.Destination
-import com.ramcosta.composedestinations.annotation.RootGraph
-import com.ramcosta.composedestinations.generated.destinations.PatchesDestination
-import com.ramcosta.composedestinations.navigation.DestinationsNavigator
+import me.bmax.apatch.ui.screen.TabNavigator
 import me.bmax.apatch.APApplication
 import me.bmax.apatch.R
 import me.bmax.apatch.ui.viewmodel.PatchesViewModel
@@ -23,17 +20,16 @@ import top.yukonga.miuix.kmp.extra.SuperArrow
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 
-@Destination<RootGraph>
 @Composable
-fun UninstallModeSelectScreen(navigator: DestinationsNavigator) {
+fun UninstallModeSelectScreen(navigator: TabNavigator) {
 
     val options = listOf(
         R.string.home_dialog_uninstall_all to {
             APApplication.uninstallApatch()
-            navigator.navigate(PatchesDestination(PatchesViewModel.PatchMode.UNPATCH))
+            navigator.navigate("patches/${PatchesViewModel.PatchMode.UNPATCH.ordinal}")
         },
         R.string.home_dialog_restore_image to {
-            navigator.navigate(PatchesDestination(PatchesViewModel.PatchMode.UNPATCH))
+            navigator.navigate("patches/${PatchesViewModel.PatchMode.UNPATCH.ordinal}")
         },
         R.string.home_dialog_uninstall_ap_only to {
             APApplication.uninstallApatch()

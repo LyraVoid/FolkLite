@@ -16,9 +16,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.core.content.edit
 import androidx.lifecycle.compose.dropUnlessResumed
-import com.ramcosta.composedestinations.annotation.Destination
-import com.ramcosta.composedestinations.annotation.RootGraph
-import com.ramcosta.composedestinations.navigation.DestinationsNavigator
+import me.bmax.apatch.ui.screen.TabNavigator
 import me.bmax.apatch.APApplication
 import me.bmax.apatch.R
 import top.yukonga.miuix.kmp.basic.Card
@@ -28,9 +26,8 @@ import top.yukonga.miuix.kmp.basic.Scaffold
 import top.yukonga.miuix.kmp.basic.SmallTopAppBar
 import top.yukonga.miuix.kmp.extra.SuperSwitch
 
-@Destination<RootGraph>
 @Composable
-fun NavigationLayoutScreen(navigator: DestinationsNavigator) {
+fun NavigationLayoutScreen(navigator: TabNavigator) {
     val prefs = APApplication.sharedPreferences
 
     var showNavApm by rememberSaveable {

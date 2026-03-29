@@ -75,11 +75,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.annotation.StringRes
 import androidx.lifecycle.compose.dropUnlessResumed
-import com.ramcosta.composedestinations.generated.destinations.AboutScreenDestination
-import com.ramcosta.composedestinations.generated.destinations.InstallModeSelectScreenDestination
-import com.ramcosta.composedestinations.generated.destinations.PatchesDestination
-import com.ramcosta.composedestinations.generated.destinations.UninstallModeSelectScreenDestination
-import com.ramcosta.composedestinations.navigation.DestinationsNavigator
+import me.bmax.apatch.ui.screen.TabNavigator
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import me.bmax.apatch.APApplication
@@ -121,7 +117,7 @@ import top.yukonga.miuix.kmp.utils.overScrollVertical
 private val managerVersion = getManagerVersion()
 
 @Composable
-fun HomeScreen(navigator: DestinationsNavigator) {
+fun HomeScreen(navigator: TabNavigator) {
     val prefs = APApplication.sharedPreferences
     var homeLayout by remember { mutableStateOf(prefs.getString("home_layout_style", "default") ?: "default") }
 
@@ -143,7 +139,7 @@ fun HomeScreen(navigator: DestinationsNavigator) {
 }
 
 @Composable
-fun MainHomeScreen(navigator: DestinationsNavigator) {
+fun MainHomeScreen(navigator: TabNavigator) {
     val scrollBehavior = MiuixScrollBehavior()
 
     val kpState by APApplication.kpStateLiveData.observeAsState(APApplication.State.UNKNOWN_STATE)
@@ -153,7 +149,7 @@ fun MainHomeScreen(navigator: DestinationsNavigator) {
         topBar = {
             TopBar(
                 onInstallClick = dropUnlessResumed {
-                    navigator.navigate(InstallModeSelectScreenDestination)
+                    navigator.navigate("install_mode_select")
                 },
                 navigator,
                 kpState,
@@ -326,7 +322,7 @@ fun AuthSuperKey(showDialog: MutableState<Boolean>, showFailedDialog: MutableSta
 @Composable
 private fun TopBar(
     onInstallClick: () -> Unit,
-    navigator: DestinationsNavigator,
+    navigator: TabNavigator,
     kpState: APApplication.State,
     scrollBehavior: ScrollBehavior
 ) {
@@ -420,7 +416,7 @@ private fun TopBar(
                                     onSelectedIndexChange = {
                                         when (index) {
                                             0 -> uriHandler.openUri("https://github.com/matsuzaka-yuki/FolkLite/issues/new/choose")
-                                            1 -> navigator.navigate(AboutScreenDestination)
+                                            1 -> navigator.navigate("about")
                                         }
                                         showDropdownMoreOptions.value = false
                                     },
@@ -440,7 +436,7 @@ private fun TopBar(
 private fun StatusCard(
     kpState: APApplication.State,
     apState: APApplication.State,
-    navigator: DestinationsNavigator
+    navigator: TabNavigator
 ) {
     val showAuthFailedTipDialog = remember { mutableStateOf(false) }
     AuthFailedTipDialog(showAuthFailedTipDialog)
@@ -489,9 +485,9 @@ private fun StatusCard(
                     }
                     APApplication.State.KERNELPATCH_NEED_UPDATE -> {
                         if (Version.installedKPVUInt() < 0x900u) {
-                            navigator.navigate(PatchesDestination(PatchesViewModel.PatchMode.PATCH_ONLY))
+                            navigator.navigate("patches/${PatchesViewModel.PatchMode.PATCH_ONLY.ordinal}")
                         } else {
-                            navigator.navigate(InstallModeSelectScreenDestination)
+                            navigator.navigate("install_mode_select")
                         }
                     }
                     APApplication.State.KERNELPATCH_NEED_REBOOT -> {
@@ -499,9 +495,9 @@ private fun StatusCard(
                     }
                     else -> {
                         if (apState == APApplication.State.ANDROIDPATCH_INSTALLED || apState == APApplication.State.ANDROIDPATCH_NEED_UPDATE) {
-                            navigator.navigate(UninstallModeSelectScreenDestination)
+                            navigator.navigate("uninstall_mode_select")
                         } else {
-                            navigator.navigate(PatchesDestination(PatchesViewModel.PatchMode.UNPATCH))
+                            navigator.navigate("patches/${PatchesViewModel.PatchMode.UNPATCH.ordinal}")
                         }
                     }
                 }
@@ -600,13 +596,13 @@ private fun StatusCard(
                             }
                             APApplication.State.KERNELPATCH_NEED_UPDATE -> {
                                 if (Version.installedKPVUInt() < 0x900u) {
-                                    navigator.navigate(PatchesDestination(PatchesViewModel.PatchMode.PATCH_ONLY))
+                                    navigator.navigate("patches/${PatchesViewModel.PatchMode.PATCH_ONLY.ordinal}")
                                 } else {
-                                    navigator.navigate(InstallModeSelectScreenDestination)
+                                    navigator.navigate("install_mode_select")
                                 }
                             }
                             else -> {
-                                navigator.navigate(InstallModeSelectScreenDestination)
+                                navigator.navigate("install_mode_select")
                             }
                         }
                     }
@@ -705,7 +701,7 @@ private fun StatusCard(
 fun AStatusCard(
     apState: APApplication.State,
     kpState: APApplication.State,
-    navigator: DestinationsNavigator
+    navigator: TabNavigator
 ) {
     Card {
         Column(
@@ -1041,7 +1037,7 @@ private enum class ApatchUninstallOption(
 }
 
 @Composable
-fun UninstallDialog(showDialog: MutableState<Boolean>, navigator: DestinationsNavigator) {
+fun UninstallDialog(showDialog: MutableState<Boolean>, navigator: TabNavigator) {
     if (!showDialog.value) return
 
     val options = remember { listOf(ApatchUninstallOption.PATCH_ONLY, ApatchUninstallOption.FULL) }
@@ -1152,7 +1148,7 @@ fun UninstallDialog(showDialog: MutableState<Boolean>, navigator: DestinationsNa
                         ApatchUninstallOption.FULL -> {
                             showDialog.value = false
                             APApplication.uninstallApatch()
-                            navigator.navigate(UninstallModeSelectScreenDestination)
+                            navigator.navigate("uninstall_mode_select")
                         }
 
                         null -> {}

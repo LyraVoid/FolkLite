@@ -16,10 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.dropUnlessResumed
-import com.ramcosta.composedestinations.annotation.Destination
-import com.ramcosta.composedestinations.annotation.RootGraph
-import com.ramcosta.composedestinations.generated.destinations.PatchesDestination
-import com.ramcosta.composedestinations.navigation.DestinationsNavigator
+import me.bmax.apatch.ui.screen.TabNavigator
 import me.bmax.apatch.R
 import me.bmax.apatch.ui.component.rememberConfirmDialog
 import me.bmax.apatch.ui.viewmodel.PatchesViewModel
@@ -37,9 +34,8 @@ import androidx.compose.runtime.remember
 
 var selectedBootImage: Uri? = null
 
-@Destination<RootGraph>
 @Composable
-fun InstallModeSelectScreen(navigator: DestinationsNavigator) {
+fun InstallModeSelectScreen(navigator: TabNavigator) {
 
     Scaffold(
         modifier = Modifier.padding(16.dp),
@@ -84,7 +80,7 @@ sealed class InstallMethod {
 @Composable
 private fun SelectInstallMethod(
     onSelected: (InstallMethod) -> Unit = {},
-    navigator: DestinationsNavigator,
+    navigator: TabNavigator,
 ) {
     val rootAvailable = rootAvailable()
     val isAbDevice = isABDevice()
@@ -106,14 +102,14 @@ private fun SelectInstallMethod(
                 val option = InstallMethod.SelectFile(uri)
                 onSelected(option)
                 selectedBootImage = option.uri
-                navigator.navigate(PatchesDestination(PatchesViewModel.PatchMode.PATCH_ONLY))
+                navigator.navigate("patches/${PatchesViewModel.PatchMode.PATCH_ONLY.ordinal}")
             }
         }
     }
 
     val confirmDialog = rememberConfirmDialog(onConfirm = {
         onSelected(InstallMethod.DirectInstallToInactiveSlot)
-        navigator.navigate(PatchesDestination(PatchesViewModel.PatchMode.INSTALL_TO_NEXT_SLOT))
+        navigator.navigate("patches/${PatchesViewModel.PatchMode.INSTALL_TO_NEXT_SLOT.ordinal}")
     }, onDismiss = null)
 
     val dialogTitle = stringResource(id = android.R.string.dialog_alert_title)
@@ -133,7 +129,7 @@ private fun SelectInstallMethod(
 
             is InstallMethod.DirectInstall -> {
                 onSelected(option)
-                navigator.navigate(PatchesDestination(PatchesViewModel.PatchMode.PATCH_AND_INSTALL))
+                navigator.navigate("patches/${PatchesViewModel.PatchMode.PATCH_AND_INSTALL.ordinal}")
             }
 
             is InstallMethod.DirectInstallToInactiveSlot -> {

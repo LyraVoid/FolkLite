@@ -1,6 +1,7 @@
 package me.bmax.apatch.ui.screen
 
 import android.content.Context
+import android.net.Uri
 import android.widget.Toast
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -16,10 +17,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.ramcosta.composedestinations.annotation.Destination
-import com.ramcosta.composedestinations.annotation.RootGraph
-import com.ramcosta.composedestinations.navigation.DestinationsNavigator
-import com.ramcosta.composedestinations.generated.destinations.InstallScreenDestination
+import me.bmax.apatch.ui.screen.TabNavigator
 import me.bmax.apatch.R
 import me.bmax.apatch.ui.viewmodel.OnlineModuleViewModel
 import me.bmax.apatch.util.download
@@ -36,9 +34,8 @@ import top.yukonga.miuix.kmp.basic.Text
 import top.yukonga.miuix.kmp.basic.TopAppBar
 import top.yukonga.miuix.kmp.theme.MiuixTheme
 
-@Destination<RootGraph>
 @Composable
-fun OnlineAPMModuleScreen(navigator: DestinationsNavigator) {
+fun OnlineAPMModuleScreen(navigator: TabNavigator) {
     val context = LocalContext.current
     OnlineModuleScreen(
         navigator = navigator,
@@ -47,9 +44,8 @@ fun OnlineAPMModuleScreen(navigator: DestinationsNavigator) {
     )
 }
 
-@Destination<RootGraph>
 @Composable
-fun OnlineKPMModuleScreen(navigator: DestinationsNavigator) {
+fun OnlineKPMModuleScreen(navigator: TabNavigator) {
     val context = LocalContext.current
     OnlineModuleScreen(
         navigator = navigator,
@@ -60,7 +56,7 @@ fun OnlineKPMModuleScreen(navigator: DestinationsNavigator) {
 
 @Composable
 fun OnlineModuleScreen(
-    navigator: DestinationsNavigator,
+    navigator: TabNavigator,
     moduleType: String,
     title: String
 ) {
@@ -141,7 +137,7 @@ fun OnlineModuleScreen(
         // Only APM modules need to navigate to install screen after download
         if (moduleType == "apm") {
             DownloadListener(context) { uri ->
-                navigator.navigate(InstallScreenDestination(uri, MODULE_TYPE.APM))
+                navigator.navigate("install_apm/${Uri.encode(uri.toString())}/APM")
             }
         }
     }

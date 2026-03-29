@@ -25,24 +25,13 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.runtime.DisposableEffect
-import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.animation.AnimatedContentTransitionScope
-import androidx.compose.animation.Crossfade
-import androidx.compose.animation.EnterTransition
-import androidx.compose.animation.ExitTransition
-import androidx.compose.animation.core.Easing
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.tween
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
-import androidx.compose.animation.slideInHorizontally
-import androidx.compose.animation.slideInVertically
-import androidx.compose.animation.slideOutHorizontally
-import androidx.compose.animation.slideOutVertically
+import androidx.compose.animation.Crossfade
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Apps
 import androidx.compose.material.icons.filled.Build
@@ -65,8 +54,8 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
@@ -82,18 +71,8 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.unit.Velocity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.NavBackStackEntry
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
-import androidx.navigation.compose.currentBackStackEntryAsState
-import com.ramcosta.composedestinations.generated.destinations.InstallScreenDestination
 import coil.Coil
 import coil.ImageLoader
-import com.ramcosta.composedestinations.DestinationsNavHost
-import com.ramcosta.composedestinations.animations.NavHostAnimatedDestinationStyle
-import com.ramcosta.composedestinations.generated.NavGraphs
-import com.ramcosta.composedestinations.rememberNavHostEngine
-import com.ramcosta.composedestinations.utils.rememberDestinationsNavigator
 import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.HazeStyle
 import dev.chrisbanes.haze.HazeTint
@@ -116,7 +95,7 @@ import me.bmax.apatch.ui.component.rememberLoadingDialog
 import me.bmax.apatch.ui.component.SignatureVerifyDialog
 import me.bmax.apatch.ui.component.UpdateDialog
 import me.bmax.apatch.ui.screen.BottomBarDestination
-import me.bmax.apatch.ui.screen.MODULE_TYPE
+import me.bmax.apatch.ui.screen.MainScreen
 import me.bmax.apatch.ui.theme.APatchTheme
 import me.bmax.apatch.ui.theme.LocalEnableBlur
 import me.bmax.apatch.ui.theme.LocalEnableFloatingBottomBar
@@ -139,41 +118,7 @@ import top.yukonga.miuix.kmp.basic.NavigationBarItem
 import top.yukonga.miuix.kmp.basic.Scaffold
 import top.yukonga.miuix.kmp.basic.Text
 import top.yukonga.miuix.kmp.theme.MiuixTheme
-import kotlin.math.PI
 import kotlin.math.abs
-import kotlin.math.cos
-import kotlin.math.exp
-import kotlin.math.sin
-import kotlin.math.sqrt
-
-@Immutable
-private class NavTransitionEasing(
-    response: Float,
-    damping: Float,
-) : Easing {
-    private val r: Float
-    private val w: Float
-    private val c2: Float
-
-    init {
-        val omega = 2.0 * PI / response
-        val k = omega * omega
-        val c = damping * 4.0 * PI / response
-        w = (sqrt(4.0 * k - c * c) / 2.0).toFloat()
-        r = (-c / 2.0).toFloat()
-        c2 = r / w
-    }
-
-    override fun transform(fraction: Float): Float {
-        val t = fraction.toDouble()
-        val decay = exp(r * t)
-        return (decay * (-cos(w * t) + c2 * sin(w * t)) + 1.0).toFloat()
-    }
-}
-
-private val NavAnimationEasing = NavTransitionEasing(0.8f, 0.95f)
-
-private fun <T> navTween() = tween<T>(durationMillis = 500, easing = NavAnimationEasing)
 
 class MainActivity : AppCompatActivity() {
 
@@ -315,17 +260,11 @@ class MainActivity : AppCompatActivity() {
                         LocalMainPagerState provides mainPagerState,
                         LocalVisibleDestinations provides visibleDestinations,
                     ) {
-                    val navController = rememberNavController()
-                    val navigator = navController.rememberDestinationsNavigator()
-
                     val loadingDialog = rememberLoadingDialog()
-                    val context = LocalContext.current
-                    val currentUri by rememberUpdatedState(uri)
 
                     var showUpdateDialog by remember { mutableStateOf(false) }
                     var updateChecked by remember { mutableStateOf(false) }
 
-                    // Check update on launch (only once)
                     LaunchedEffect(Unit) {
                         if (!updateChecked) {
                             val checkUpdate = APApplication.sharedPreferences.getBoolean("check_update", true)
@@ -345,41 +284,7 @@ class MainActivity : AppCompatActivity() {
                         }
                     }
 
-                    LaunchedEffect(currentUri) {
-                        currentUri?.let { navUri ->
-                            navigator.navigate(InstallScreenDestination(navUri, MODULE_TYPE.APM))
-                        }
-                    }
-
-                    LaunchedEffect(Unit) {
-                        installUriChannel.receiveAsFlow().collect { channelUri ->
-                            navigator.navigate(InstallScreenDestination(channelUri, MODULE_TYPE.APM))
-                        }
-                    }
-
-                    if (isFromShortcut) {
-                        LaunchedEffect(Unit) {
-                            navigator.navigate(
-                                com.ramcosta.composedestinations.generated.destinations.ExecuteAPMActionScreenDestination(shortcutModuleId)
-                            )
-                            pendingShortcutModuleId = null
-                        }
-                    }
-
-                    val pendingShortcut by rememberUpdatedState(pendingShortcutModuleId)
-                    LaunchedEffect(pendingShortcut) {
-                        val shortcutId = pendingShortcut
-                        if (shortcutId != null && !isFromShortcut) {
-                            navigator.navigate(
-                                com.ramcosta.composedestinations.generated.destinations.ExecuteAPMActionScreenDestination(shortcutId)
-                            )
-                            pendingShortcutModuleId = null
-                        }
-                    }
-
-                    val currentBackStackEntry by navController.currentBackStackEntryAsState()
-                    val currentRoute = currentBackStackEntry?.destination?.route
-                    val showBottomBarRoute = currentRoute != InstallScreenDestination.route
+                    val showBottomBarRoute = true
 
                     var isBottomBarVisible by remember { mutableStateOf(true) }
                     var autoHideKey by remember { mutableStateOf(0) }
@@ -500,7 +405,7 @@ class MainActivity : AppCompatActivity() {
                             }
                         }
                     ) {
-                        DestinationsNavHost(
+                        MainScreen(
                             modifier = Modifier
                                 .then(
                                     if (enableFloatingBottomBar) Modifier.nestedScroll(scrollConnection)
@@ -518,42 +423,6 @@ class MainActivity : AppCompatActivity() {
                                         Modifier.layerBackdrop(backdrop)
                                     else Modifier
                                 ),
-                            navGraph = NavGraphs.root,
-                            navController = navController,
-                            engine = rememberNavHostEngine(navHostContentAlignment = Alignment.TopCenter),
-                            defaultTransitions = object : NavHostAnimatedDestinationStyle() {
-                                override val enterTransition: AnimatedContentTransitionScope<NavBackStackEntry>.() -> EnterTransition =
-                                    {
-                                        slideInHorizontally(
-                                            initialOffsetX = { it },
-                                            animationSpec = navTween()
-                                        )
-                                    }
-
-                                override val exitTransition: AnimatedContentTransitionScope<NavBackStackEntry>.() -> ExitTransition =
-                                    {
-                                        slideOutHorizontally(
-                                            targetOffsetX = { -it / 4 },
-                                            animationSpec = navTween()
-                                        ) + fadeOut(animationSpec = navTween())
-                                    }
-
-                                override val popEnterTransition: AnimatedContentTransitionScope<NavBackStackEntry>.() -> EnterTransition =
-                                    {
-                                        slideInHorizontally(
-                                            initialOffsetX = { -it / 4 },
-                                            animationSpec = navTween()
-                                        ) + fadeIn(animationSpec = navTween())
-                                    }
-
-                                override val popExitTransition: AnimatedContentTransitionScope<NavBackStackEntry>.() -> ExitTransition =
-                                    {
-                                        slideOutHorizontally(
-                                            targetOffsetX = { it },
-                                            animationSpec = navTween()
-                                        ) + fadeOut(animationSpec = navTween())
-                                    }
-                            }
                         )
                     } // end Scaffold content
 

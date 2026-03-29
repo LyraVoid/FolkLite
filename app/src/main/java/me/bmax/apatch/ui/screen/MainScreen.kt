@@ -5,18 +5,13 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import com.ramcosta.composedestinations.annotation.Destination
-import com.ramcosta.composedestinations.annotation.RootGraph
-import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import me.bmax.apatch.ui.theme.LocalMainPagerState
 import me.bmax.apatch.ui.theme.LocalVisibleDestinations
 import me.bmax.apatch.util.VisualConfig
 
-@Destination<RootGraph>(start = true)
 @Composable
-fun MainScreen(navigator: DestinationsNavigator) {
+fun MainScreen(modifier: Modifier = Modifier) {
     val mainPagerState = LocalMainPagerState.current ?: return
     val visibleDestinations = LocalVisibleDestinations.current
 
@@ -33,14 +28,14 @@ fun MainScreen(navigator: DestinationsNavigator) {
         state = mainPagerState.pagerState,
         beyondViewportPageCount = 4,
         userScrollEnabled = true,
-        modifier = Modifier.fillMaxSize()
+        modifier = modifier.fillMaxSize()
     ) { page ->
         when (visibleDestinations.getOrNull(page)) {
-            BottomBarDestination.Home -> HomeScreen(navigator)
-            BottomBarDestination.KModule -> KPModuleScreen(navigator)
+            BottomBarDestination.Home -> HomeTabNavHost(Modifier.fillMaxSize())
+            BottomBarDestination.KModule -> KModuleTabNavHost(Modifier.fillMaxSize())
             BottomBarDestination.SuperUser -> SuperUserScreen()
-            BottomBarDestination.AModule -> APModuleScreen(navigator)
-            BottomBarDestination.Settings -> SettingScreen(navigator)
+            BottomBarDestination.AModule -> AModuleTabNavHost(Modifier.fillMaxSize())
+            BottomBarDestination.Settings -> SettingsTabNavHost(Modifier.fillMaxSize())
             null -> {}
         }
     }

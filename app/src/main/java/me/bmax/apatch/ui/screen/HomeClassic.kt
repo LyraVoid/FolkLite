@@ -37,10 +37,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.dropUnlessResumed
-import com.ramcosta.composedestinations.generated.destinations.InstallModeSelectScreenDestination
-import com.ramcosta.composedestinations.generated.destinations.PatchesDestination
-import com.ramcosta.composedestinations.generated.destinations.UninstallModeSelectScreenDestination
-import com.ramcosta.composedestinations.navigation.DestinationsNavigator
+import me.bmax.apatch.ui.screen.TabNavigator
 import me.bmax.apatch.APApplication
 import me.bmax.apatch.R
 import me.bmax.apatch.ui.theme.isInDarkTheme
@@ -63,7 +60,7 @@ import top.yukonga.miuix.kmp.utils.overScrollVertical
 private val classicManagerVersion = getManagerVersion()
 
 @Composable
-fun ClassicHomeScreen(navigator: DestinationsNavigator) {
+fun ClassicHomeScreen(navigator: TabNavigator) {
     val scrollBehavior = MiuixScrollBehavior()
 
     val kpState by APApplication.kpStateLiveData.observeAsState(APApplication.State.UNKNOWN_STATE)
@@ -73,7 +70,7 @@ fun ClassicHomeScreen(navigator: DestinationsNavigator) {
         topBar = {
             TopBarList(
                 onInstallClick = dropUnlessResumed {
-                    navigator.navigate(InstallModeSelectScreenDestination)
+                    navigator.navigate("install_mode_select")
                 },
                 navigator,
                 kpState,
@@ -134,7 +131,7 @@ fun ClassicHomeScreen(navigator: DestinationsNavigator) {
 private fun ClassicWorkCard(
     kpState: APApplication.State,
     apState: APApplication.State,
-    navigator: DestinationsNavigator
+    navigator: TabNavigator
 ) {
     val showAuthFailedTipDialog = remember { mutableStateOf(false) }
     AuthFailedTipDialog(showAuthFailedTipDialog)
@@ -196,9 +193,9 @@ private fun ClassicWorkCard(
                 }
                 APApplication.State.KERNELPATCH_NEED_UPDATE -> {
                     if (Version.installedKPVUInt() < 0x900u) {
-                        navigator.navigate(PatchesDestination(PatchesViewModel.PatchMode.PATCH_ONLY))
+                        navigator.navigate("patches/${PatchesViewModel.PatchMode.PATCH_ONLY.ordinal}")
                     } else {
-                        navigator.navigate(InstallModeSelectScreenDestination)
+                        navigator.navigate("install_mode_select")
                     }
                 }
                 APApplication.State.KERNELPATCH_NEED_REBOOT -> {
@@ -206,9 +203,9 @@ private fun ClassicWorkCard(
                 }
                 else -> {
                     if (apState == APApplication.State.ANDROIDPATCH_INSTALLED || apState == APApplication.State.ANDROIDPATCH_NEED_UPDATE) {
-                        navigator.navigate(UninstallModeSelectScreenDestination)
+                        navigator.navigate("uninstall_mode_select")
                     } else {
-                        navigator.navigate(PatchesDestination(PatchesViewModel.PatchMode.UNPATCH))
+                        navigator.navigate("patches/${PatchesViewModel.PatchMode.UNPATCH.ordinal}")
                     }
                 }
             }

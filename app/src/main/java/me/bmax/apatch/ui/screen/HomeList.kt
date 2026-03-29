@@ -60,11 +60,7 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.dropUnlessResumed
-import com.ramcosta.composedestinations.generated.destinations.AboutScreenDestination
-import com.ramcosta.composedestinations.generated.destinations.InstallModeSelectScreenDestination
-import com.ramcosta.composedestinations.generated.destinations.PatchesDestination
-import com.ramcosta.composedestinations.generated.destinations.UninstallModeSelectScreenDestination
-import com.ramcosta.composedestinations.navigation.DestinationsNavigator
+import me.bmax.apatch.ui.screen.TabNavigator
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import me.bmax.apatch.APApplication
@@ -104,7 +100,7 @@ import top.yukonga.miuix.kmp.utils.overScrollVertical
 internal val listScreenManagerVersion = getManagerVersion()
 
 @Composable
-fun ListHomeScreen(navigator: DestinationsNavigator) {
+fun ListHomeScreen(navigator: TabNavigator) {
     val scrollBehavior = MiuixScrollBehavior()
 
     val kpState by APApplication.kpStateLiveData.observeAsState(APApplication.State.UNKNOWN_STATE)
@@ -114,7 +110,7 @@ fun ListHomeScreen(navigator: DestinationsNavigator) {
         topBar = {
             TopBarList(
                 onInstallClick = dropUnlessResumed {
-                    navigator.navigate(InstallModeSelectScreenDestination)
+                    navigator.navigate("install_mode_select")
                 },
                 navigator,
                 kpState,
@@ -272,7 +268,7 @@ internal fun AuthSuperKeyList(showDialog: MutableState<Boolean>, showFailedDialo
 @Composable
 internal fun TopBarList(
     onInstallClick: () -> Unit,
-    navigator: DestinationsNavigator,
+    navigator: TabNavigator,
     kpState: APApplication.State,
     scrollBehavior: ScrollBehavior
 ) {
@@ -366,7 +362,7 @@ internal fun TopBarList(
                                     onSelectedIndexChange = {
                                         when (index) {
                                             0 -> uriHandler.openUri("https://github.com/matsuzaka-yuki/FolkLite/issues/new/choose")
-                                            1 -> navigator.navigate(AboutScreenDestination)
+                                            1 -> navigator.navigate("about")
                                         }
                                         showDropdownMoreOptions.value = false
                                     },
@@ -386,7 +382,7 @@ internal fun TopBarList(
 private fun KStatusCardList(
     kpState: APApplication.State,
     apState: APApplication.State,
-    navigator: DestinationsNavigator
+    navigator: TabNavigator
 ) {
 
     val showAuthFailedTipDialog = remember { mutableStateOf(false) }
@@ -410,7 +406,7 @@ private fun KStatusCardList(
         },
         onClick = {
             if (kpState != APApplication.State.KERNELPATCH_INSTALLED) {
-                navigator.navigate(InstallModeSelectScreenDestination)
+                navigator.navigate("install_mode_select")
             }
         },
     ) {
@@ -515,9 +511,9 @@ private fun KStatusCardList(
                             APApplication.State.KERNELPATCH_NEED_UPDATE -> {
                                 // todo: remove legacy compact for kp < 0.9.0
                                 if (Version.installedKPVUInt() < 0x900u) {
-                                    navigator.navigate(PatchesDestination(PatchesViewModel.PatchMode.PATCH_ONLY))
+                                    navigator.navigate("patches/${PatchesViewModel.PatchMode.PATCH_ONLY.ordinal}")
                                 } else {
-                                    navigator.navigate(InstallModeSelectScreenDestination)
+                                    navigator.navigate("install_mode_select")
                                 }
                             }
 
@@ -531,9 +527,9 @@ private fun KStatusCardList(
 
                             else -> {
                                 if (apState == APApplication.State.ANDROIDPATCH_INSTALLED || apState == APApplication.State.ANDROIDPATCH_NEED_UPDATE) {
-                                    navigator.navigate(UninstallModeSelectScreenDestination)
+                                    navigator.navigate("uninstall_mode_select")
                                 } else {
-                                    navigator.navigate(PatchesDestination(PatchesViewModel.PatchMode.UNPATCH))
+                                    navigator.navigate("patches/${PatchesViewModel.PatchMode.UNPATCH.ordinal}")
                                 }
                             }
                         }

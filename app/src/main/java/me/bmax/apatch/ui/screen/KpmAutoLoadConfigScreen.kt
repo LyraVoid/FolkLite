@@ -30,9 +30,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.ramcosta.composedestinations.annotation.Destination
-import com.ramcosta.composedestinations.annotation.RootGraph
-import com.ramcosta.composedestinations.navigation.DestinationsNavigator
+import me.bmax.apatch.ui.screen.TabNavigator
 import me.bmax.apatch.R
 import me.bmax.apatch.ui.component.KpmAutoLoadConfig
 import me.bmax.apatch.ui.component.KpmAutoLoadManager
@@ -55,9 +53,8 @@ import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 
-@Destination<RootGraph>
 @Composable
-fun KpmAutoLoadConfigScreen(navigator: DestinationsNavigator) {
+fun KpmAutoLoadConfigScreen(navigator: TabNavigator) {
     val context = LocalContext.current
     var isEnabled by remember { mutableStateOf(KpmAutoLoadManager.isEnabled.value) }
     var jsonString by remember { mutableStateOf(KpmAutoLoadManager.getConfigJson()) }

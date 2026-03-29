@@ -32,9 +32,7 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.dropUnlessResumed
-import com.ramcosta.composedestinations.annotation.Destination
-import com.ramcosta.composedestinations.annotation.RootGraph
-import com.ramcosta.composedestinations.navigation.DestinationsNavigator
+import me.bmax.apatch.ui.screen.TabNavigator
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -61,9 +59,8 @@ enum class MODULE_TYPE {
 }
 
 @Composable
-@Destination<RootGraph>
 fun InstallScreen(
-    navigator: DestinationsNavigator,
+    navigator: TabNavigator,
     uri: Uri,
     type: MODULE_TYPE
 ) {
@@ -184,5 +181,5 @@ private fun TopBar(onBack: () -> Unit = {}, onSave: () -> Unit = {}) {
 @Preview
 @Composable
 fun InstallPreview() {
-//    InstallScreen(DestinationsNavigator(), uri = Uri.EMPTY)
+//    InstallScreen(TabNavigator(), uri = Uri.EMPTY)
 }

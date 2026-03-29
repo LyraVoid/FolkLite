@@ -48,7 +48,7 @@ import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material.icons.filled.Restore
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.outlined.Delete
-import com.ramcosta.composedestinations.generated.destinations.OnlineAPMModuleScreenDestination
+
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
@@ -82,9 +82,9 @@ import androidx.lifecycle.LifecycleEventObserver
 import androidx.compose.ui.zIndex
 import androidx.core.net.toUri
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.ramcosta.composedestinations.generated.destinations.ExecuteAPMActionScreenDestination
-import com.ramcosta.composedestinations.generated.destinations.InstallScreenDestination
-import com.ramcosta.composedestinations.navigation.DestinationsNavigator
+import me.bmax.apatch.ui.screen.TabNavigator
+
+
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -139,7 +139,7 @@ import top.yukonga.miuix.kmp.interfaces.ExperimentalScrollBarApi
 import top.yukonga.miuix.kmp.basic.rememberScrollBarAdapter
 
 @Composable
-fun APModuleScreen(navigator: DestinationsNavigator) {
+fun APModuleScreen(navigator: TabNavigator) {
     val context = LocalContext.current
     val scrollBehavior = MiuixScrollBehavior()
 
@@ -190,7 +190,7 @@ fun APModuleScreen(navigator: DestinationsNavigator) {
                 title = stringResource(R.string.apm),
                 scrollBehavior = scrollBehavior,
                 actions = {
-                    IconButton(onClick = { navigator.navigate(OnlineAPMModuleScreenDestination) }) {
+                    IconButton(onClick = { navigator.navigate("online_apm_module") }) {
                         Icon(
                             imageVector = Icons.Filled.CloudDownload,
                             contentDescription = "Online Modules"
@@ -206,7 +206,7 @@ fun APModuleScreen(navigator: DestinationsNavigator) {
                 val installConfirmDialog = rememberConfirmDialog(
                     onConfirm = {
                         pendingInstallUri?.let { uri ->
-                            navigator.navigate(InstallScreenDestination(uri, MODULE_TYPE.APM))
+                            navigator.navigate("install_apm/${android.net.Uri.encode(uri.toString())}/APM")
                             viewModel.markNeedRefresh()
                         }
                         pendingInstallUri = null
@@ -247,7 +247,7 @@ fun APModuleScreen(navigator: DestinationsNavigator) {
                             content = context.getString(R.string.apm_install_confirm_content, fileName)
                         )
                     } else {
-                        navigator.navigate(InstallScreenDestination(uri, MODULE_TYPE.APM))
+                        navigator.navigate("install_apm/${android.net.Uri.encode(uri.toString())}/APM")
                         viewModel.markNeedRefresh()
                     }
                 }
@@ -314,7 +314,7 @@ fun APModuleScreen(navigator: DestinationsNavigator) {
                         .fillMaxSize(),
                     state = moduleListState,
                     onInstallModule = {
-                        navigator.navigate(InstallScreenDestination(it, MODULE_TYPE.APM))
+                        navigator.navigate("install_apm/${android.net.Uri.encode(it.toString())}/APM")
                     },
                     onClickModule = { id, name, hasWebUi ->
                         if (hasWebUi) {
@@ -341,7 +341,7 @@ fun APModuleScreen(navigator: DestinationsNavigator) {
 
 @Composable
 private fun ModuleList(
-    navigator: DestinationsNavigator,
+    navigator: TabNavigator,
     viewModel: APModuleViewModel,
     modifier: Modifier = Modifier,
     state: LazyListState,
@@ -847,7 +847,7 @@ private fun ModuleShortcutDialog(
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun ModuleItem(
-    navigator: DestinationsNavigator,
+    navigator: TabNavigator,
     module: APModuleViewModel.ModuleInfo,
     updateUrl: String,
     onUninstall: (APModuleViewModel.ModuleInfo) -> Unit,
@@ -993,7 +993,7 @@ private fun ModuleItem(
                         IconTextButton(
                             imageVector = Icons.Default.PlayArrow,
                             onClick = {
-                                navigator.navigate(ExecuteAPMActionScreenDestination(module.id))
+                                navigator.navigate("execute_apm_action/${module.id}")
                                 viewModel.markNeedRefresh()
                             }
                         )
