@@ -196,6 +196,8 @@
     <string name="settings_check_update_summary">应用启动时自动检测更新喵</string>
     <string name="settings_block_kernelpatch_update">不要提示内核补丁更新啦喵</string>
     <string name="settings_block_kernelpatch_update_summary">烦死啦，人家才不要看更新提示呢喵！</string>
+    <string name="settings_block_androidpatch_update">不要提示系统补丁更新啦喵</string>
+    <string name="settings_block_androidpatch_update_summary">才不要看系统补丁的更新提示呢，烦死了喵！</string>
     <string name="hide_about_card">藏起这张卡片喵</string>
     <string name="hide_about_card_summary">把首页那个关于卡片藏起来啦喵</string>
     <string name="update_available_title">有更新喵！</string>

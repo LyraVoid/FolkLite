@@ -404,4 +404,6 @@
     <string name="apm_shortcut_create">创建</string>
     <string name="settings_block_kernelpatch_update">屏蔽道核符箓更新神识</string>
     <string name="settings_block_kernelpatch_update_summary">不再以此俗事扰乱道心</string>
+    <string name="settings_block_androidpatch_update">屏蔽护法灵符更新神识</string>
+    <string name="settings_block_androidpatch_update_summary">不再以此等杂务扰乱道心</string>
 </resources>

@@ -409,6 +409,8 @@
     <string name="settings_check_update_summary">打开魔法工坊时自动检查魔法升级</string>
     <string name="settings_block_kernelpatch_update">KernelPatch шинэчлэлийг хаах</string>
     <string name="settings_block_kernelpatch_update_summary">KernelPatch шинэчлэлийн мэдэгдэл харуулахгүй</string>
+    <string name="settings_block_androidpatch_update">Системийн патч шинэчлэлийг хаах</string>
+    <string name="settings_block_androidpatch_update_summary">Системийн патч(APD) шинэчлэлийн мэдэгдэл харуулахгүй</string>
 
     <string name="home_need_update">发现新魔法版本</string>
 

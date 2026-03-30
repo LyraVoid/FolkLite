@@ -36,6 +36,8 @@
     <string name="settings_check_update_summary">アプリを開いたときに自動で更新を確認します</string>
     <string name="settings_block_kernelpatch_update">KernelPatch の更新をブロック</string>
     <string name="settings_block_kernelpatch_update_summary">KernelPatch の更新通知を表示しないようにします。</string>
+    <string name="settings_block_androidpatch_update">システムパッチの更新をブロック</string>
+    <string name="settings_block_androidpatch_update_summary">システムパッチ(APD)の更新通知を表示しないようにします。</string>
     <string name="hide_about_card">「アプリについて」カードを非表示</string>
     <string name="hide_about_card_summary">ホーム画面の「アプリについて」のカードを非表示にします</string>
     <string name="update_available_title">更新が利用可能です</string>

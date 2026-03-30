@@ -40,6 +40,7 @@ import androidx.lifecycle.compose.dropUnlessResumed
 import me.bmax.apatch.ui.screen.TabNavigator
 import me.bmax.apatch.APApplication
 import me.bmax.apatch.R
+import me.bmax.apatch.apApp
 import me.bmax.apatch.ui.theme.isInDarkTheme
 import me.bmax.apatch.ui.viewmodel.PatchesViewModel
 import me.bmax.apatch.util.Version
@@ -64,7 +65,12 @@ fun ClassicHomeScreen(navigator: TabNavigator) {
     val scrollBehavior = MiuixScrollBehavior()
 
     val kpState by APApplication.kpStateLiveData.observeAsState(APApplication.State.UNKNOWN_STATE)
-    val apState by APApplication.apStateLiveData.observeAsState(APApplication.State.UNKNOWN_STATE)
+    val apStateRaw by APApplication.apStateLiveData.observeAsState(APApplication.State.UNKNOWN_STATE)
+    val apState = if (apStateRaw == APApplication.State.ANDROIDPATCH_NEED_UPDATE && apApp.isAndroidPatchUpdateBlocked()) {
+        APApplication.State.ANDROIDPATCH_INSTALLED
+    } else {
+        apStateRaw
+    }
 
     Scaffold(
         topBar = {

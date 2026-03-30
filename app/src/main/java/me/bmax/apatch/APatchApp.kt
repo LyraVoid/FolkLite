@@ -88,6 +88,7 @@ class APApplication : Application(), Thread.UncaughtExceptionHandler {
 
         const val SP_NAME = "config"
         const val PREF_BLOCK_KERNELPATCH_UPDATE = "block_kernelpatch_update"
+        const val PREF_BLOCK_ANDROIDPATCH_UPDATE = "block_androidpatch_update"
         private const val SHOW_BACKUP_WARN = "show_backup_warning"
         lateinit var sharedPreferences: SharedPreferences
         var isSignatureValid = true
@@ -279,7 +280,12 @@ class APApplication : Application(), Thread.UncaughtExceptionHandler {
                     }
 
                     if (isApdInstalled && mgv.toInt() != Version.installedApdVInt && Version.installedApdVInt > 0) {
-                        _apStateLiveData.postValue(State.ANDROIDPATCH_NEED_UPDATE)
+                        val isApBlocked = apApp.isAndroidPatchUpdateBlocked()
+                        if (isApBlocked) {
+                            _apStateLiveData.postValue(State.ANDROIDPATCH_INSTALLED)
+                        } else {
+                            _apStateLiveData.postValue(State.ANDROIDPATCH_NEED_UPDATE)
+                        }
                         Log.w(TAG, "APatch version mismatch: manager=$mgv, installed=${Version.installedApdVInt}, triggering update")
                         // su path
                         val suPathFile = File(SU_PATH_FILE)
@@ -352,6 +358,10 @@ class APApplication : Application(), Thread.UncaughtExceptionHandler {
 
     fun isKernelPatchUpdateBlocked(): Boolean {
         return sharedPreferences.getBoolean(PREF_BLOCK_KERNELPATCH_UPDATE, false)
+    }
+
+    fun isAndroidPatchUpdateBlocked(): Boolean {
+        return sharedPreferences.getBoolean(PREF_BLOCK_ANDROIDPATCH_UPDATE, false)
     }
 
     fun updateBackupWarningState(state: Boolean) {
