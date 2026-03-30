@@ -211,6 +211,8 @@
     <string name="apm_webui_open">Открыть</string>
     <string name="settings_check_update">Проверьте наличие обновлений</string>
     <string name="settings_check_update_summary">Автоматическая проверка обновлений при открытии приложения</string>
+    <string name="settings_block_kernelpatch_update">Блокировать обновление KernelPatch</string>
+    <string name="settings_block_kernelpatch_update_summary">Не показывать уведомления об обновлении KernelPatch</string>
     <string name="hide_about_card">Скрыть карточку О приложении</string>
     <string name="hide_about_card_summary">Скрыть карточку О приложении на главном экране</string>
     <string name="home_device_info">Устройство</string>

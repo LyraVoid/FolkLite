@@ -402,4 +402,6 @@
     <string name="apm_shortcut_webui">网页界面</string>
     <string name="apm_shortcut_name_label">名称</string>
     <string name="apm_shortcut_create">创建</string>
+    <string name="settings_block_kernelpatch_update">屏蔽道核符箓更新神识</string>
+    <string name="settings_block_kernelpatch_update_summary">不再以此俗事扰乱道心</string>
 </resources>

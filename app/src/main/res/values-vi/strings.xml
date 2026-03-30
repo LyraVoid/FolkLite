@@ -142,6 +142,8 @@
     <string name="settings_clear_super_key_dialog">Bạn có thực sự muốn tiếp tục không?</string>
     <string name="settings_check_update">Kiểm tra cập nhật</string>
     <string name="settings_check_update_summary">Tự động kiểm tra cập nhật khi mở ứng dụng</string>
+    <string name="settings_block_kernelpatch_update">Chặn cập nhật KernelPatch</string>
+    <string name="settings_block_kernelpatch_update_summary">Không hiển thị thông báo cập nhật KernelPatch</string>
     <string name="hide_about_card">Ẩn thẻ Giới thiệu</string>
     <string name="hide_about_card_summary">Ẩn thẻ Giới thiệu trên màn hình chính</string>
     <string name="home_install_unknown_summary">Bấm để cài đặt</string>

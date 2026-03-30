@@ -48,6 +48,7 @@ import androidx.compose.material.icons.rounded.VerifiedUser
 import androidx.compose.material.icons.rounded.VisibilityOff
 import androidx.compose.material.icons.rounded.VpnKey
 import androidx.compose.material.icons.rounded.SwapVert
+import androidx.compose.material.icons.rounded.Vaccines
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
@@ -881,6 +882,26 @@ fun SettingScreen(navigator: TabNavigator) {
                         onCheckedChange = { isChecked ->
                             checkUpdate = isChecked
                             prefs.edit { putBoolean("check_update", isChecked) }
+                        }
+                    )
+
+                    var blockKernelPatchUpdate by rememberSaveable {
+                        mutableStateOf(prefs.getBoolean(APApplication.PREF_BLOCK_KERNELPATCH_UPDATE, false))
+                    }
+                    SuperSwitch(
+                        title = stringResource(id = R.string.settings_block_kernelpatch_update),
+                        summary = stringResource(id = R.string.settings_block_kernelpatch_update_summary),
+                        checked = blockKernelPatchUpdate,
+                        startAction = {
+                            Icon(
+                                Icons.Rounded.Lock,
+                                null,
+                                modifier = Modifier.padding(end = 6.dp)
+                            )
+                        },
+                        onCheckedChange = { isChecked ->
+                            blockKernelPatchUpdate = isChecked
+                            prefs.edit { putBoolean(APApplication.PREF_BLOCK_KERNELPATCH_UPDATE, isChecked) }
                         }
                     )
                 }

@@ -407,6 +407,8 @@
     <string name="unofficial_warning_summary">请勿向官方魔法塔提交此版本的魔法事故报告。</string>
 
     <string name="settings_check_update_summary">打开魔法工坊时自动检查魔法升级</string>
+    <string name="settings_block_kernelpatch_update">KernelPatch шинэчлэлийг хаах</string>
+    <string name="settings_block_kernelpatch_update_summary">KernelPatch шинэчлэлийн мэдэгдэл харуулахгүй</string>
 
     <string name="home_need_update">发现新魔法版本</string>
 

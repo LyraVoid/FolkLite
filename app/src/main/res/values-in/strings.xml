@@ -156,6 +156,8 @@
     <string name="setting_reset_su_path">Reset jalur su</string>
     <string name="patch_mode_install_to_next_slot">Mode: Instal ke slot nonaktif (Setelah OTA)</string>
     <string name="settings_check_update_summary">Otomatis memeriksa pembaruan saat membuka manajer</string>
+    <string name="settings_block_kernelpatch_update">Blokir Pembaruan KernelPatch</string>
+    <string name="settings_block_kernelpatch_update_summary">Jangan tampilkan notifikasi pembaruan KernelPatch</string>
     <string name="hide_about_card">Sembunyikan Kartu Tentang</string>
     <string name="hide_about_card_summary">Sembunyikan kartu Tentang di layar utama</string>
     <string name="apm_webui_open">Buka</string>

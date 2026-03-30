@@ -155,6 +155,8 @@
     <string name="success">Sucesso</string>
     <string name="setting_reset_su_path">Redefinir caminho su</string>
     <string name="settings_check_update_summary">Verifique automaticamente se há atualizações ao abrir o app</string>
+    <string name="settings_block_kernelpatch_update">Bloquear atualização do KernelPatch</string>
+    <string name="settings_block_kernelpatch_update_summary">Não mostrar notificações de atualização do KernelPatch</string>
     <string name="hide_about_card">Ocultar cartão Sobre</string>
     <string name="hide_about_card_summary">Ocultar o cartão Sobre na tela inicial</string>
     <string name="settings_check_update">Verificar por atualizações</string>

@@ -152,6 +152,8 @@
     <string name="mode_select_page_title">تثبيت</string>
     <string name="settings_check_update">تحقق للحصول على التحديثات</string>
     <string name="settings_check_update_summary">التحقق تلقائيًا من وجود تحديثات عند فتح التطبيق</string>
+    <string name="settings_block_kernelpatch_update">حظر تحديث KernelPatch</string>
+    <string name="settings_block_kernelpatch_update_summary">عدم إظهار إشعارات تحديث KernelPatch</string>
     <string name="hide_about_card">إخفاء بطاقة "عن"</string>
     <string name="hide_about_card_summary">إخفاء بطاقة "عن" على الشاشة الرئيسية</string>
     <string name="home_install_unknown_summary">اضغط للتثبيت</string>
