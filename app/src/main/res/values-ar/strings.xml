@@ -180,6 +180,10 @@
     <string name="mode_select_page_install_inactive_slot_warning">**سيتم إجبار جهازك** على التمهيد إلى الفتحة غير النشطة الحالية بعد إعادة التشغيل!
 \nاستخدم هذا الخيار فقط بعد انتهاء التحديث الهوائي.
 \nهل تريد المتابعة؟</string>
+    <string name="mode_select_page_select_kpimg">استخدام ملف ترقيع محلي (KPimg)</string>
+    <string name="patch_custom_kpimg_label">KPimg مخصص</string>
+    <string name="patch_custom_kpimg_file">الملف: %s</string>
+    <string name="patch_select_kpimg_btn">اختيار KPimg</string>
     <string name="home_dialog_auth_fail_content">غير قادر على مصادقة المفتاح الخارق، وبالتالي لا يمكن لـ FolkLite العمل بشكل صحيح. \nفيما يلي بعض الأسباب المحتملة لفشل المصادقة: \n1. لم تقم بتصحيح صورة التمهيد باستخدام KernelPatch. \n2. لم يتم تثبيت صورة التمهيد المصححة. \n3. مفتاح خارق خطأ. \n4. جهازك لا يدعم FolkLite وKernelPatch. \n \nيرجى التحقق والمحاولة مرة أخرى. إذا كانت لا تزال هناك مشكلات، فيمكنك دائمًا طرح الأسئلة على صفحة المشكلات الخاصة بالمستودع الرسمي.</string>
     <string name="patch_mode_patch_and_install">الوضع: باتش وتثبيت</string>
     <string name="patch_mode_install_to_next_slot">الوضع: تثبيت في الفتحة التالية (بعد OTA)</string>

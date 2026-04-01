@@ -215,6 +215,10 @@
     <string name="mode_select_page_select_file">boot イメージを選択でパッチ</string>
     <string name="mode_select_page_install_inactive_slot">非アクティブスロットにインストール (OTA 後)</string>
     <string name="mode_select_page_install_inactive_slot_warning">再起動後にデバイスは、非アクティブなスロットから**強制的に**起動されます！\nこのオプションは、OTA の完了後にのみ使用してください。\n続行しますか？</string>
+    <string name="mode_select_page_select_kpimg">ローカルパッチファイルを使用 (KPimg)</string>
+    <string name="patch_custom_kpimg_label">カスタム KPimg</string>
+    <string name="patch_custom_kpimg_file">ファイル: %s</string>
+    <string name="patch_select_kpimg_btn">KPimg を選択</string>
     <string name="home_dialog_auth_fail_title">認証に失敗しました。</string>
     <string name="home_dialog_auth_fail_content">SuperKey を認証できないため、APatch は正常に動作しません。\n認証の失敗で考えられる原因は以下の通りです:\n1. boot.img に KernelPatch を適用していない。\n2. パッチを適用した boot.img をフラッシュしていない。\n3. SuperKey が間違っているか、特殊文字が含まれている。\n4. 使用しているデバイスが APatch と KernelPatch に対応していない。\n\n確認をした上で、再度お試しください。それでも問題が解決しない場合は、公式リポジトリの Issue ページでいつでも質問ができます。</string>
     <string name="home_more_menu_feedback_or_suggestion">フィードバックまたは提案</string>

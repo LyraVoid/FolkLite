@@ -181,6 +181,10 @@
     <string name="mode_select_page_install_inactive_slot_warning">重启后会**强制**进另一个槽位喵！
 \n只能在 OTA 更新完后的重启前用哦喵！
 \n确定要继续嘛喵？</string>
+    <string name="mode_select_page_select_kpimg">使用本地补丁文件 (KPimg)</string>
+    <string name="patch_custom_kpimg_label">自定义 KPimg</string>
+    <string name="patch_custom_kpimg_file">文件: %s</string>
+    <string name="patch_select_kpimg_btn">选择 KPimg</string>
     <string name="home_dialog_auth_fail_title">认证失败了喵！</string>
     <string name="home_dialog_auth_fail_content">超级密钥认不了，FolkLite 用不了喵！
 \n失败的原因大概是喵：

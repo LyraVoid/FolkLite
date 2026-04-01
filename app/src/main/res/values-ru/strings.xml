@@ -160,6 +160,10 @@
     <string name="mode_select_page_select_file">Выберите образ boot, который следует пропатчить</string>
     <string name="settings_donot_store_superkey">Не хранить СуперКлюч в памяти устройства</string>
     <string name="mode_select_page_install_inactive_slot_warning">Ваше устройство будет **ПРИНУДЕТЕЛЬНО** загружено в текущий неактивный слот после перезагрузки!\nИспользуйте эту опцию только после успешной установки OTA.\nПродолжить?</string>
+    <string name="mode_select_page_select_kpimg">Использовать локальный файл патча (KPimg)</string>
+    <string name="patch_custom_kpimg_label">Пользовательский KPimg</string>
+    <string name="patch_custom_kpimg_file">Файл: %s</string>
+    <string name="patch_select_kpimg_btn">Выбрать KPimg</string>
     <string name="kpm_control">Управление</string>
     <string name="mode_select_page_patch_and_install">Пропатчить и установить</string>
     <string name="settings_donot_store_superkey_summary">Вам придётся вводить СуперКлюч каждый раз при открытии менеджера</string>

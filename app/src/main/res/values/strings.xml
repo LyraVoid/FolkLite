@@ -243,6 +243,10 @@
     <string name="mode_select_page_select_file">Select a boot image to patch</string>
     <string name="mode_select_page_install_inactive_slot">Install to inactive slot (After OTA)</string>
     <string name="mode_select_page_install_inactive_slot_warning">Your device will be **FORCED** to boot to the current inactive slot after a reboot!\nOnly use this option after OTA is done.\nContinue?</string>
+    <string name="mode_select_page_select_kpimg">Use local patch file (KPimg)</string>
+    <string name="patch_custom_kpimg_label">Custom KPimg</string>
+    <string name="patch_custom_kpimg_file">File: %s</string>
+    <string name="patch_select_kpimg_btn">Select KPimg</string>
 
     <string name="home_dialog_auth_fail_title">Authentication failed</string>
     <string name="home_dialog_auth_fail_content">Unable to authenticate the SuperKey, therefore FolkLite cannot work properly.\nHere are some possible reasons for authentication failure:\n1. You didn\'t patch the boot.img with KernelPatch.\n2. The patched boot.img wasn\'t flashed.\n3. The SuperKey is wrong or contains special characters.\n4. Your device doesn\'t support FolkLite and KernelPatch.\n\nPlease check and try again. If there are still issues, you can always ask questions on the official repository\'s issues page.</string>

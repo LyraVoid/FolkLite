@@ -181,6 +181,10 @@
     <string name="mode_select_page_install_inactive_slot_warning">将在重启后强制切换到另一个槽位！
 \n注意只能在 OTA 更新完成后的重启之前使用。
 \n确定要继续吗？</string>
+    <string name="mode_select_page_select_kpimg">使用本地补丁文件 (KPimg)</string>
+    <string name="patch_custom_kpimg_label">自定义 KPimg</string>
+    <string name="patch_custom_kpimg_file">文件: %s</string>
+    <string name="patch_select_kpimg_btn">选择 KPimg</string>
     <string name="home_dialog_auth_fail_title">超级密钥鉴权失败</string>
     <string name="home_dialog_auth_fail_content">超级密钥验证失败，因此 FolkLite 不能正常工作。\n下面是一些可能的原因： \n⒈ 未使用 KernelPatch 修补内核镜像 \n⒉ KernelPatch 修补后的内核镜像未刷入 \n⒊超级密钥输入错误或包含特殊字符\n⒋设备不支持 FolkLite 以及 KernelPatch \n\n请检查后重试，如果问题仍然存在，可随时前往 GitHub 仓库的 issues 页面提问。</string>
     <string name="home_more_menu_feedback_or_suggestion">反馈或建议</string>

@@ -32,7 +32,9 @@ import me.bmax.apatch.util.copyAndCloseOut
 import me.bmax.apatch.util.createRootShell
 import me.bmax.apatch.util.inputStream
 import me.bmax.apatch.util.shellForResult
+import me.bmax.apatch.util.getFileNameFromUri
 import me.bmax.apatch.util.writeTo
+import me.bmax.apatch.ui.screen.selectedKPImg
 import org.ini4j.Ini
 import java.io.BufferedReader
 import java.io.File
@@ -65,6 +67,8 @@ class PatchesViewModel : ViewModel() {
     var patching by mutableStateOf(false)
     var patchdone by mutableStateOf(false)
     var needReboot by mutableStateOf(false)
+    var useCustomKPImg by mutableStateOf(false)
+    var customKPImgFileName by mutableStateOf("")
 
     var error by mutableStateOf("")
     var patchLog by mutableStateOf("")
@@ -249,6 +253,21 @@ class PatchesViewModel : ViewModel() {
 
             running = true
             prepare()
+
+            if (selectedKPImg != null && mode == PatchMode.PATCH_ONLY) {
+                try {
+                    val kpimgFile = File(patchDir, "kpimg")
+                    selectedKPImg!!.inputStream().buffered().use { src ->
+                        src.copyAndCloseOut(kpimgFile.outputStream())
+                    }
+                    customKPImgFileName = getFileNameFromUri(apApp, selectedKPImg!!) ?: "kpimg"
+                    useCustomKPImg = true
+                } catch (e: IOException) {
+                    Log.e(TAG, "Copy custom kpimg error: $e")
+                    error += "Copy custom kpimg error: ${e.message}\n"
+                }
+            }
+
             if (mode != PatchMode.UNPATCH) {
                 parseKpimg()
             }
@@ -308,6 +327,31 @@ class PatchesViewModel : ViewModel() {
         }
     }
 
+    fun setCustomKPImg(uri: Uri) {
+        viewModelScope.launch(Dispatchers.IO) {
+            if (running) return@launch
+            running = true
+            error = ""
+
+            val kpimgFile = File(patchDir, "kpimg")
+            try {
+                uri.inputStream().buffered().use { src ->
+                    src.copyAndCloseOut(kpimgFile.outputStream())
+                }
+            } catch (e: IOException) {
+                Log.e(TAG, "Copy custom kpimg error: $e")
+                error = "Copy custom kpimg error: ${e.message}\n"
+                running = false
+                return@launch
+            }
+
+            customKPImgFileName = getFileNameFromUri(apApp, uri) ?: "kpimg"
+            useCustomKPImg = true
+            parseKpimg()
+            running = false
+        }
+    }
+
     fun doUnpatch() {
         viewModelScope.launch(Dispatchers.IO) {
             patching = true
@@ -356,7 +400,7 @@ class PatchesViewModel : ViewModel() {
 
             val apVer = Version.getManagerVersion().second
             val rand = (1..4).map { ('a'..'z').random() }.joinToString("")
-            val outFilename = "apatch_patched_${apVer}_${BuildConfig.buildKPV}_${rand}.img"
+            val outFilename = "folklite_patched_${apVer}_${BuildConfig.buildKPV}_${rand}.img"
 
             val logs = object : CallbackList<String>() {
                 override fun onAddElement(e: String?) {

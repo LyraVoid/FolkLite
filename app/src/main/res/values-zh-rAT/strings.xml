@@ -193,6 +193,10 @@
     <string name="mode_select_page_select_file">选择要加持的圣器容器</string>
     <string name="mode_select_page_install_inactive_slot">祝祷到备用星辰容器 (圣典仪式后)</string>
     <string name="mode_select_page_install_inactive_slot_warning">你的圣光道具将在神翼再生后**强制**启动到当前未激活的星辰位置！\n仅在圣典仪式完成后使用此选项。\n继续吗？</string>
+    <string name="mode_select_page_select_kpimg">使用本地补丁文件 (KPimg)</string>
+    <string name="patch_custom_kpimg_label">自訂 KPimg</string>
+    <string name="patch_custom_kpimg_file">檔案: %s</string>
+    <string name="patch_select_kpimg_btn">選擇 KPimg</string>
 
     <string name="home_dialog_auth_fail_title">祝祷失败</string>
     <string name="home_dialog_auth_fail_content">无法祝祷圣光之心，因此圣光工坊无法正常工作。\n以下是祝祷失败的一些可能原因：\n1. 你没有使用灵魂之力加持圣器容器。\n2. 加持后的圣器容器未开启。\n3. 圣光之心错误或含有混沌之力。\n4. 你的圣光道具不支持此神力。\n\n请检查并重试。如果仍有问题，你可以在官方圣光塔的issue页面提问。</string>

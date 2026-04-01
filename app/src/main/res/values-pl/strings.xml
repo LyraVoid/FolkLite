@@ -165,6 +165,10 @@
     <string name="hide_apatch_manager">Ukryj menedżer FolkLite</string>
     <string name="hide_apatch_manager_summary">Zainstaluj aplikację proxy z losowym ID pakietu i niestandardową etykietą</string>
     <string name="mode_select_page_install_inactive_slot_warning">Twoje urządzenie będzie **ZMUSZONE** do uruchomienia się w bieżącym nieaktywnym slocie po ponownym uruchomieniu!\nUżywaj tej opcji tylko po zakończeniu aktualizacji OTA.\nKontynuować?</string>
+    <string name="mode_select_page_select_kpimg">Użyj lokalnego pliku łatki (KPimg)</string>
+    <string name="patch_custom_kpimg_label">Niestandardowy KPimg</string>
+    <string name="patch_custom_kpimg_file">Plik: %s</string>
+    <string name="patch_select_kpimg_btn">Wybierz KPimg</string>
     <string name="about_telegram_channel">Kanał na Telegramie</string>
     <string name="about_app_version">Wersja %1$s</string>
     <string name="about_telegram_group">Grupa na Telegramie</string>

@@ -166,6 +166,10 @@
     <string name="mode_select_page_install_inactive_slot_warning">Seu dispositivo será **FORÇADO** a inicializar no slot inativo atual após uma reinicialização!
 \nSó use esta opção após a conclusão do OTA.
 \nDeseja continuar?</string>
+    <string name="mode_select_page_select_kpimg">Usar arquivo de patch local (KPimg)</string>
+    <string name="patch_custom_kpimg_label">KPimg personalizado</string>
+    <string name="patch_custom_kpimg_file">Arquivo: %s</string>
+    <string name="patch_select_kpimg_btn">Selecionar KPimg</string>
     <string name="home_dialog_auth_fail_title">Falha na autenticação</string>
     <string name="mode_select_page_select_file">Selecionar imagem boot para patch</string>
     <string name="mode_select_page_title">Instalar</string>

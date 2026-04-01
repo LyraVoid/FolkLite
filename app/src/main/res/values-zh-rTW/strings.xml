@@ -165,6 +165,10 @@
     <string name="mode_select_page_install_inactive_slot_warning">重新啟動後，您的裝置將**強制**啟動到目前非活動插槽！
 \n僅在 OTA 完成之後使用此選項。
 \n繼續？</string>
+    <string name="mode_select_page_select_kpimg">使用本地修補檔案 (KPimg)</string>
+    <string name="patch_custom_kpimg_label">自訂 KPimg</string>
+    <string name="patch_custom_kpimg_file">檔案: %s</string>
+    <string name="patch_select_kpimg_btn">選擇 KPimg</string>
     <string name="settings_check_update_summary">開啟應用程式時自動檢查更新</string>
     <string name="settings_block_kernelpatch_update">屏蔽核心修補更新提示</string>
     <string name="settings_block_kernelpatch_update_summary">不顯示核心修補的更新通知</string>

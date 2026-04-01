@@ -193,6 +193,10 @@
     <string name="mode_select_page_install_inactive_slot_warning">Thiết bị của bạn sẽ **BẮT BUỘC** khởi động vào khe không hoạt động hiện tại sau khi khởi động lại!
 \nChỉ sử dụng tùy chọn này sau khi OTA hoàn tất.
 \nTiếp tục?</string>
+    <string name="mode_select_page_select_kpimg">Sử dụng file vá cục bộ (KPimg)</string>
+    <string name="patch_custom_kpimg_label">KPimg tùy chỉnh</string>
+    <string name="patch_custom_kpimg_file">File: %s</string>
+    <string name="patch_select_kpimg_btn">Chọn KPimg</string>
     <string name="deep_orange_theme">Chủ đề màu cam đậm</string>
     <string name="home_more_menu_feedback_or_suggestion">Góp ý hoặc báo lỗi</string>
     <string name="patch_item_set_skey_label">Độ dài của SuperKey phải có ít nhất 8 ký tự và bao gồm cả số và chữ cái.</string>

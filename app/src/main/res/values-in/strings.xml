@@ -173,6 +173,10 @@
     <string name="home_kpatch_version">Versi KernelPatch</string>
     <string name="enable_web_debugging">Aktifkan debugging WebView</string>
     <string name="mode_select_page_install_inactive_slot_warning">Perangkat akan **DIPAKSA** untuk memulai ulang ke slot nonaktif!\nHanya gunakan opsi ini setelah proses OTA selesai.\nLanjutkan?</string>
+    <string name="mode_select_page_select_kpimg">Gunakan file *patch* lokal (KPimg)</string>
+    <string name="patch_custom_kpimg_label">KPimg kustom</string>
+    <string name="patch_custom_kpimg_file">Berkas: %s</string>
+    <string name="patch_select_kpimg_btn">Pilih KPimg</string>
     <string name="home_dialog_uninstall_title">Copot</string>
     <string name="home_dialog_uninstall_ap_only">Hapus AndroidPatch</string>
     <string name="home_dialog_uninstall_ap_only_desc">Hapus AndroidPatch saja dan pertahankan manajer.</string>

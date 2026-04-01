@@ -194,6 +194,10 @@
     <string name="mode_select_page_select_file">选择要附魔的魔法容器</string>
     <string name="mode_select_page_install_inactive_slot">契约到备用星之容器 (OTA仪式后)</string>
     <string name="mode_select_page_install_inactive_slot_warning">你的魔法道具将在重新觉醒后**强制**启动到当前未激活的星之位置！\n仅在OTA仪式完成后使用此选项。\n继续吗？</string>
+    <string name="mode_select_page_select_kpimg">使用本地魔法补丁 (KPimg)</string>
+    <string name="patch_custom_kpimg_label">自定义 KPimg</string>
+    <string name="patch_custom_kpimg_file">文件: %s</string>
+    <string name="patch_select_kpimg_btn">选择 KPimg</string>
 
     <string name="home_dialog_auth_fail_title">认证失败</string>
     <string name="home_dialog_auth_fail_content">无法认证心之密钥，因此魔法工坊无法正常工作。\n以下是认证失败的一些可能原因：\n1. 你没有使用心之契约附魔魔法容器。\n2. 附魔后的魔法容器未激活。\n3. 心之密钥错误或含有混沌之力。\n4. 你的魔法道具不支持此魔法。\n\n请检查并重试。如果仍有问题，你可以在官方魔法塔的issue页面提问。</string>

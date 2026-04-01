@@ -170,6 +170,10 @@
     <string name="mode_select_page_title">Instalar</string>
     <string name="mode_select_page_patch_and_install">Parchear e instalar</string>
     <string name="mode_select_page_install_inactive_slot_warning">Tu dispositivo se verá **OBLIGADO** a arrancar desde la partición («slot») que ahora está inactiva. \nUtiliza esta opción solo cuando una actualización del sistema (OTA) haya terminado de instalarse, justo antes de tener que reiniciar. \n¿Quieres continuar?</string>
+    <string name="mode_select_page_select_kpimg">Usar archivo de parche local (KPimg)</string>
+    <string name="patch_custom_kpimg_label">KPimg personalizado</string>
+    <string name="patch_custom_kpimg_file">Archivo: %s</string>
+    <string name="patch_select_kpimg_btn">Seleccionar KPimg</string>
     <string name="enable_web_debugging">Habilitar depuración de WebView</string>
     <string name="home_install_unknown_summary">Haz clic para instalar</string>
     <string name="home_device_info">Dispositivo</string>

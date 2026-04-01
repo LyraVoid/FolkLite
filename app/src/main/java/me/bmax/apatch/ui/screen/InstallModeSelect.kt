@@ -33,6 +33,7 @@ import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.runtime.remember
 
 var selectedBootImage: Uri? = null
+var selectedKPImg: Uri? = null
 
 @Composable
 fun InstallModeSelectScreen(navigator: TabNavigator) {
@@ -63,6 +64,11 @@ sealed class InstallMethod {
         @param:StringRes override val label: Int = R.string.mode_select_page_select_file,
     ) : InstallMethod()
 
+    data class SelectKPImg(
+        val uri: Uri? = null,
+        @param:StringRes override val label: Int = R.string.mode_select_page_select_kpimg,
+    ) : InstallMethod()
+
     data object DirectInstall : InstallMethod() {
         override val label: Int
             get() = R.string.mode_select_page_patch_and_install
@@ -85,8 +91,7 @@ private fun SelectInstallMethod(
     val rootAvailable = rootAvailable()
     val isAbDevice = isABDevice()
 
-    val radioOptions =
-        mutableListOf<InstallMethod>(InstallMethod.SelectFile())
+    val radioOptions = mutableListOf<InstallMethod>(InstallMethod.SelectFile(), InstallMethod.SelectKPImg())
     if (rootAvailable) {
         radioOptions.add(InstallMethod.DirectInstall)
         if (isAbDevice) {
@@ -107,6 +112,19 @@ private fun SelectInstallMethod(
         }
     }
 
+    val selectKPImgLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.StartActivityForResult()
+    ) {
+        if (it.resultCode == Activity.RESULT_OK) {
+            it.data?.data?.let { uri ->
+                val option = InstallMethod.SelectKPImg(uri)
+                onSelected(option)
+                selectedKPImg = option.uri
+                navigator.navigate("patches/${PatchesViewModel.PatchMode.PATCH_ONLY.ordinal}")
+            }
+        }
+    }
+
     val confirmDialog = rememberConfirmDialog(onConfirm = {
         onSelected(InstallMethod.DirectInstallToInactiveSlot)
         navigator.navigate("patches/${PatchesViewModel.PatchMode.INSTALL_TO_NEXT_SLOT.ordinal}")
@@ -118,11 +136,20 @@ private fun SelectInstallMethod(
     val onClick = { option: InstallMethod ->
         when (option) {
             is InstallMethod.SelectFile -> {
-                // Reset before selecting
                 selectedBootImage = null
                 selectImageLauncher.launch(
                     Intent(Intent.ACTION_GET_CONTENT).apply {
                         type = "application/octet-stream"
+                    }
+                )
+            }
+
+            is InstallMethod.SelectKPImg -> {
+                selectedKPImg = null
+                selectKPImgLauncher.launch(
+                    Intent(Intent.ACTION_GET_CONTENT).apply {
+                        type = "application/octet-stream"
+                        addCategory(Intent.CATEGORY_OPENABLE)
                     }
                 )
             }
