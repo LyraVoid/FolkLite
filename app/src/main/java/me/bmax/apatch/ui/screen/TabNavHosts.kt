@@ -11,6 +11,7 @@ import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
@@ -177,7 +178,7 @@ fun KModuleTabNavHost(modifier: Modifier = Modifier) {
                 navArgument("type") { type = NavType.StringType }
             )
         ) { backStackEntry ->
-            val uri = Uri.parse(backStackEntry.arguments?.getString("uri"))
+            val uri = Uri.parse(Uri.decode(backStackEntry.arguments?.getString("uri")))
             val type = MODULE_TYPE.valueOf(backStackEntry.arguments?.getString("type") ?: "KPM")
             InstallScreen(navigator, uri, type)
         }
@@ -193,9 +194,27 @@ fun KModuleTabNavHost(modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun AModuleTabNavHost(modifier: Modifier = Modifier) {
+fun AModuleTabNavHost(
+    modifier: Modifier = Modifier,
+    onExternalNavConsumed: () -> Unit = {},
+) {
     val navController = rememberNavController()
     val navigator = rememberTabNavigator(navController)
+    val externalEvent = LocalExternalNavEvent.current
+
+    LaunchedEffect(externalEvent) {
+        when (externalEvent) {
+            is ExternalNavEvent.InstallApk -> {
+                navigator.navigate("install_apm/${Uri.encode(externalEvent.uri.toString())}/APM")
+                onExternalNavConsumed()
+            }
+            is ExternalNavEvent.ExecuteAction -> {
+                navigator.navigate("execute_apm_action/${externalEvent.moduleId}")
+                onExternalNavConsumed()
+            }
+            null -> {}
+        }
+    }
 
     NavHost(
         navController = navController,
@@ -219,7 +238,7 @@ fun AModuleTabNavHost(modifier: Modifier = Modifier) {
                 navArgument("type") { type = NavType.StringType }
             )
         ) { backStackEntry ->
-            val uri = Uri.parse(backStackEntry.arguments?.getString("uri"))
+            val uri = Uri.parse(Uri.decode(backStackEntry.arguments?.getString("uri")))
             val type = MODULE_TYPE.valueOf(backStackEntry.arguments?.getString("type") ?: "APM")
             InstallScreen(navigator, uri, type)
         }

@@ -11,12 +11,25 @@ import me.bmax.apatch.ui.theme.LocalVisibleDestinations
 import me.bmax.apatch.util.VisualConfig
 
 @Composable
-fun MainScreen(modifier: Modifier = Modifier) {
+fun MainScreen(
+    modifier: Modifier = Modifier,
+    onExternalNavConsumed: () -> Unit = {},
+) {
     val mainPagerState = LocalMainPagerState.current ?: return
     val visibleDestinations = LocalVisibleDestinations.current
+    val externalEvent = LocalExternalNavEvent.current
 
     LaunchedEffect(mainPagerState.pagerState.currentPage) {
         mainPagerState.syncPage()
+    }
+
+    LaunchedEffect(externalEvent) {
+        if (externalEvent != null) {
+            val apmIndex = visibleDestinations.indexOf(BottomBarDestination.AModule)
+            if (apmIndex >= 0) {
+                mainPagerState.animateToPage(apmIndex)
+            }
+        }
     }
 
     val hasBackStack = mainPagerState.pagerState.currentPage > 0
@@ -34,7 +47,10 @@ fun MainScreen(modifier: Modifier = Modifier) {
             BottomBarDestination.Home -> HomeTabNavHost(Modifier.fillMaxSize())
             BottomBarDestination.KModule -> KModuleTabNavHost(Modifier.fillMaxSize())
             BottomBarDestination.SuperUser -> SuperUserScreen()
-            BottomBarDestination.AModule -> AModuleTabNavHost(Modifier.fillMaxSize())
+            BottomBarDestination.AModule -> AModuleTabNavHost(
+                modifier = Modifier.fillMaxSize(),
+                onExternalNavConsumed = onExternalNavConsumed,
+            )
             BottomBarDestination.Settings -> SettingsTabNavHost(Modifier.fillMaxSize())
             null -> {}
         }

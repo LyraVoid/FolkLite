@@ -94,6 +94,8 @@ import me.bmax.apatch.ui.component.rememberConfirmDialog
 import me.bmax.apatch.ui.component.rememberLoadingDialog
 import me.bmax.apatch.ui.component.UpdateDialog
 import me.bmax.apatch.ui.screen.BottomBarDestination
+import me.bmax.apatch.ui.screen.ExternalNavEvent
+import me.bmax.apatch.ui.screen.LocalExternalNavEvent
 import me.bmax.apatch.ui.screen.MainScreen
 import me.bmax.apatch.ui.theme.APatchTheme
 import me.bmax.apatch.ui.theme.LocalEnableBlur
@@ -283,6 +285,38 @@ class MainActivity : AppCompatActivity() {
                         }
                     }
 
+                    var externalNavEvent by remember { mutableStateOf<ExternalNavEvent?>(null) }
+                    var navEventConsumed by remember { mutableStateOf(false) }
+
+                    val currentUri by rememberUpdatedState(uri)
+                    LaunchedEffect(currentUri) {
+                        currentUri?.let { navUri ->
+                            externalNavEvent = ExternalNavEvent.InstallApk(navUri)
+                        }
+                    }
+
+                    LaunchedEffect(Unit) {
+                        installUriChannel.receiveAsFlow().collect { channelUri ->
+                            externalNavEvent = ExternalNavEvent.InstallApk(channelUri)
+                        }
+                    }
+
+                    if (isFromShortcut) {
+                        LaunchedEffect(Unit) {
+                            externalNavEvent = ExternalNavEvent.ExecuteAction(shortcutModuleId)
+                            pendingShortcutModuleId = null
+                        }
+                    }
+
+                    val pendingShortcut by rememberUpdatedState(pendingShortcutModuleId)
+                    LaunchedEffect(pendingShortcut) {
+                        val shortcutId = pendingShortcut
+                        if (shortcutId != null && !isFromShortcut) {
+                            externalNavEvent = ExternalNavEvent.ExecuteAction(shortcutId)
+                            pendingShortcutModuleId = null
+                        }
+                    }
+
                     val showBottomBarRoute = true
 
                     var isBottomBarVisible by remember { mutableStateOf(true) }
@@ -404,6 +438,9 @@ class MainActivity : AppCompatActivity() {
                             }
                         }
                     ) {
+                        CompositionLocalProvider(
+                            LocalExternalNavEvent provides if (navEventConsumed) null else externalNavEvent
+                        ) {
                         MainScreen(
                             modifier = Modifier
                                 .then(
@@ -422,7 +459,9 @@ class MainActivity : AppCompatActivity() {
                                         Modifier.layerBackdrop(backdrop)
                                     else Modifier
                                 ),
+                            onExternalNavConsumed = { navEventConsumed = true },
                         )
+                        } // end LocalExternalNavEvent CompositionLocalProvider
                     } // end Scaffold content
 
                 // Update dialog
