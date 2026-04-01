@@ -33,7 +33,7 @@
     <string name="reboot_bootloader">重启到 Bootloader 模式哒喵！</string>
     <string name="about_source_code"><![CDATA[<p>去 %1$s 看看人家的源码喵<p/>加人家的 %2$s 频道哦喵<p/>还要加人家的 %3$s 群呢喵]]></string>
     <string name="home_auth_key_desc">认证完才能用哦，不要乱戳人家哒喵</string>
-    <string name="kpatch_version">版本号：%s 喵</string>
+    <string name="kpatch_version">版本号：%s </string>
     <string name="home_ap_cando_uninstall">卸掉喵！</string>
     <string name="apatch_version">版本号：%s 喵</string>
     <string name="home_ap_cando_install">装一下喵！</string>
