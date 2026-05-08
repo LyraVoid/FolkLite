@@ -1,8 +1,8 @@
 [versions]
-agp = "8.13.1"
-kotlin = "2.2.21"
-ksp = "2.3.3"
-compose-bom = "2025.12.00"
+agp = "9.2.1"
+kotlin = "2.3.21"
+ksp = "2.3.7"
+compose-bom = "2026.05.00"
 lifecycle = "2.10.0"
 compose-destination = "2.3.0"
 libsu = "6.0.0"
@@ -20,14 +20,14 @@ kotlin = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 lsplugin-apksign = { id = "org.lsposed.lsplugin.apksign", version = "1.4" }
 lsplugin-resopt = { id = "org.lsposed.lsplugin.resopt", version = "1.6" }
-lsplugin-cmaker = { id = "org.lsposed.lsplugin.cmaker", version = "1.2" }
+lsplugin-cmaker = { id = "org.lsposed.lsplugin.cmaker", version = "1.4" }
 kotlin-compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 
 [libraries]
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version = "1.7.1" }
-androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version = "1.12.1" }
+androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version = "1.13.0" }
 androidx-core-splashscreen = { group = "androidx.core", name = "core-splashscreen", version = "1.2.0" }
-androidx-webkit = { group = "androidx.webkit", name = "webkit", version = "1.14.0" }
+androidx-webkit = { group = "androidx.webkit", name = "webkit", version = "1.16.0" }
 
 androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "compose-bom" }
 androidx-compose-material-icons-extended = { group = "androidx.compose.material", name = "material-icons-extended" }
@@ -55,7 +55,7 @@ dev-rikka-rikkax-parcelablelist = { module = "dev.rikka.rikkax.parcelablelist:pa
 
 io-coil-kt-coil-compose = { group = "io.coil-kt", name = "coil-compose", version = "2.7.0" }
 
-kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version = "1.10.2" }
+kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version = "1.11.0" }
 
 me-zhanghai-android-appiconloader-coil = { group = "me.zhanghai.android.appiconloader", name = "appiconloader-coil", version = "1.5.0" }
 
